@@ -790,7 +790,10 @@ function doPrint() {
     : assessType === 'ca' ? ('Continuous Assessment' + (atypeEl && atypeEl.value.trim() ? ' \u2014 ' + atypeEl.value.trim() : ''))
     : '';
 
-  const levelColors = { fail:'#a02828', poor:'#8a5200', fair:'#1a5e8a', excellent:'#1e7a4a' };
+  const levelColors = {
+    fail:'#b22222', poor:'#c05800', below:'#7a6000',
+    fair:'#1a5e8a', good:'#2471a3', verygood:'#1e7a4a', excellent:'#145a32'
+  };
 
   const rows = c.criteria.filter(cr => !disabledCriteria.has(cr.id)).map(cr => {
     const r  = ratings[cr.id];
