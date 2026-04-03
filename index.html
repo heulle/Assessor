@@ -257,6 +257,19 @@ body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height
 .divider{height:1px;background:#eee;margin:.55rem 0;}
 .section-lbl{font-family:var(--sans);font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#aaa;margin-bottom:.4rem;}
 
+/* toggle criterion button */
+.toggle-crit-btn{
+  display:inline-block;margin-left:.5rem;
+  border:1px solid #1e7a4a;border-radius:3px;padding:.08rem .45rem;
+  font-family:var(--sans);font-size:.65rem;font-weight:600;
+  color:#1e7a4a;background:#eef8f3;cursor:pointer;transition:all .13s;
+  vertical-align:middle;
+}
+.toggle-crit-btn:hover{filter:brightness(.92);}
+.toggle-crit-btn.active{border-color:#aaa;color:#888;background:#f5f5f5;}
+.crit-excluded{opacity:.4;}
+.crit-excluded .lvl-wrap, .crit-excluded .score-input-wrap, .crit-excluded .crit-notes{pointer-events:none;}
+
 @media(max-width:720px){.sum-col{display:none;}.overall-row{grid-template-columns:1fr;}}
 </style>
 </head>
@@ -501,6 +514,7 @@ const COURSES = {
 let cur = null;
 let ratings = {};
 let manualScores = {};
+let disabledCriteria = new Set();
 let assessType = null;
 let assessTypeText = '';
 
@@ -508,7 +522,10 @@ function launch(key) {
   cur = key;
   ratings = {};
   manualScores = {};
+  disabledCriteria = new Set();
   const c = COURSES[key];
+  // Form is excluded by default for graded courses
+  if (c.type === 'graded') disabledCriteria.add('form');
   document.getElementById('welcome').style.display = 'none';
   document.getElementById('assessment').style.display = 'flex';
   document.getElementById('tb-course').textContent = c.label;
@@ -550,7 +567,8 @@ function buildCriteria(c) {
   c.criteria.forEach(cr => {
     ratings[cr.id] = null;
     const card = document.createElement('div');
-    card.className = 'crit-card';
+    card.className = 'crit-card' + (cr.id === 'form' && c.type === 'graded' ? ' crit-excluded' : '');
+    card.id = `card-${cr.id}`;
     const wt = cr.wt ? `<span class="crit-wt">${cr.wt}%</span>` : '';
     const btns = c.levels.map(l =>
       `<button class="lvl-btn" data-crit="${cr.id}" data-lk="${l.key}" onclick="pick(\'${cr.id}\',\'${l.key}\',this)">${l.label}</button>`
@@ -562,10 +580,15 @@ function buildCriteria(c) {
           placeholder="—" oninput="setManual('${cr.id}', this.value)">
         <span class="score-badge">/20</span>
       </div>` : '';
+    const isForm = (c.type === 'graded' && cr.id === 'form');
+    const toggleBtn = isForm ? `
+      <button class="toggle-crit-btn active" id="toggle-${cr.id}" onclick="toggleCrit('${cr.id}')" title="Include this criterion in the score">
+        + Add Form
+      </button>` : '';
     card.innerHTML = `
       <div class="crit-row">
         <div class="crit-meta">
-          <div class="crit-name">${cr.name}${wt}</div>
+          <div class="crit-name">${cr.name}${wt}${toggleBtn}</div>
           <div class="crit-hint">${cr.hint}</div>
         </div>
         <div class="lvl-wrap">${btns}</div>
@@ -654,9 +677,29 @@ function setManual(critId, val) {
   refreshSummary();
 }
 
+function toggleCrit(critId) {
+  const btn = document.getElementById(`toggle-${critId}`);
+  const card = document.getElementById(`card-${critId}`);
+  if (disabledCriteria.has(critId)) {
+    // Currently excluded → include it
+    disabledCriteria.delete(critId);
+    if (card) card.classList.remove('crit-excluded');
+    if (btn) { btn.textContent = '− Remove Form'; btn.classList.remove('active'); }
+  } else {
+    // Currently included → exclude it
+    disabledCriteria.add(critId);
+    if (card) card.classList.add('crit-excluded');
+    if (btn) { btn.textContent = '+ Add Form'; btn.classList.add('active'); }
+  }
+  refreshSummary();
+}
+
 function scoreToTwenty(c) {
   if (c.type === 'graded') {
-    const scored = c.criteria.filter(cr => manualScores[cr.id] !== null && manualScores[cr.id] !== undefined);
+    const scored = c.criteria.filter(cr =>
+      !disabledCriteria.has(cr.id) &&
+      manualScores[cr.id] !== null && manualScores[cr.id] !== undefined
+    );
     if (!scored.length) return null;
     const sum = scored.reduce((acc, cr) => acc + manualScores[cr.id], 0);
     return (sum / scored.length).toFixed(1);
@@ -682,10 +725,14 @@ function refreshSummary() {
   c.criteria.forEach(cr => {
     const r = ratings[cr.id];
     const lv = r ? c.levels.find(l => l.key === r) : null;
+    const isDisabled = disabledCriteria.has(cr.id);
     const chip = document.createElement('div');
-    chip.className = `sc ${r ? 's-'+r : 's-none'}`;
+    chip.className = `sc ${isDisabled ? 's-none' : (r ? 's-'+r : 's-none')}`;
+    if (isDisabled) chip.style.opacity = '.4';
     let scoreStr = '';
-    if (c.type === 'graded') {
+    if (isDisabled) {
+      scoreStr = 'excluded';
+    } else if (c.type === 'graded') {
       const ms = manualScores[cr.id];
       scoreStr = (ms !== null && ms !== undefined) ? `${ms}/20` : '';
     } else if (r && c.type === 'weighted' && cr.wt) {
@@ -706,7 +753,16 @@ function refreshSummary() {
 
 function resetAll() {
   const c = COURSES[cur];
+  disabledCriteria = new Set();
+  if (c.type === 'graded') disabledCriteria.add('form');
   c.criteria.forEach(cr => {
+    const card = document.getElementById(`card-${cr.id}`);
+    if (card) {
+      card.classList.remove('crit-excluded');
+      if (cr.id === 'form' && c.type === 'graded') card.classList.add('crit-excluded');
+    }
+    const tb = document.getElementById(`toggle-${cr.id}`);
+    if (tb) { tb.textContent = '+ Add Form'; tb.classList.add('active'); }
     ratings[cr.id] = null;
     manualScores[cr.id] = null;
     document.querySelectorAll(`[data-crit="${cr.id}"]`).forEach(b => b.className = 'lvl-btn');
@@ -736,7 +792,7 @@ function doPrint() {
 
   const levelColors = { fail:'#a02828', poor:'#8a5200', fair:'#1a5e8a', excellent:'#1e7a4a' };
 
-  const rows = c.criteria.map(cr => {
+  const rows = c.criteria.filter(cr => !disabledCriteria.has(cr.id)).map(cr => {
     const r  = ratings[cr.id];
     const lv = r ? c.levels.find(l => l.key === r) : null;
     const nt = document.getElementById(`nt-${cr.id}`)?.value.trim() || '';
