@@ -7,20 +7,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #1c1c1c;
-  --paper: #f8f6f1;
+  --ink: #111111;
+  --paper: #ffffff;
   --card: #ffffff;
-  --rule: #d8d2c8;
-  --muted: #6b6560;
-  --green: #457466;
-  --green-dark: #2e5249;
-  --green-pale: #eaf3f0;
-  --green-mid: #b8d8d0;
-  --fail-c:#a02828; --fail-bg:#fdf2f2;
-  --poor-c:#b06a00; --poor-bg:#fdf6ec;
+  --rule: #d0ccc8;
+  --muted: #555550;
+  --accent: #111111;
+  --fail-c:#a02828; --fail-bg:#fff0f0;
+  --poor-c:#8a5200; --poor-bg:#fff8ec;
   --fair-c:#1a5e8a; --fair-bg:#eef5fb;
   --excel-c:#1e7a4a; --excel-bg:#eef8f3;
-  --rad:6px;
+  --rad:4px;
   --serif:'Libre Baskerville',Georgia,serif;
   --sans:'Source Sans 3',system-ui,sans-serif;
 }
@@ -30,66 +27,85 @@ body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height
 /* ── WELCOME ── */
 #welcome{
   min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:3rem 2rem;
-  background:#1a2820;
-  color:white;
+  padding:3rem 2rem;background:#fff;color:var(--ink);
+  border-top:6px solid var(--ink);
 }
 .wl-logo{
-  font-family:var(--sans);font-size:.78rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;
-  color:rgba(255,255,255,.38);margin-bottom:3rem;
-  border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:1rem;
-  text-align:center;
+  font-family:var(--sans);font-size:.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:#888;margin-bottom:2.5rem;text-align:center;
 }
 .wl-title{
-  font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:700;
-  text-align:center;line-height:1.15;margin-bottom:.6rem;letter-spacing:-.5px;
+  font-family:var(--serif);font-size:clamp(2rem,4vw,2.8rem);font-weight:700;
+  text-align:center;line-height:1.15;margin-bottom:.5rem;letter-spacing:-.5px;color:var(--ink);
 }
-.wl-title span{color:#a8d8c8;}
-.wl-sub{color:rgba(255,255,255,.42);font-size:1rem;margin-bottom:3.5rem;text-align:center;font-style:italic;}
+.wl-title span{border-bottom:3px solid var(--ink);}
+.wl-sub{color:#777;font-size:1rem;margin-bottom:3.5rem;text-align:center;font-style:italic;}
 .cc-wrap{display:flex;gap:1.5rem;flex-wrap:wrap;justify-content:center;max-width:900px;}
 .cc{
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:8px;padding:2rem 1.8rem;cursor:pointer;
-  transition:all .2s;width:252px;text-align:center;
+  background:#fff;border:2px solid var(--ink);
+  border-radius:var(--rad);padding:2.2rem 2.5rem;cursor:pointer;
+  transition:all .18s;min-width:200px;text-align:center;
 }
-.cc:hover{background:rgba(168,216,200,.09);border-color:rgba(168,216,200,.4);transform:translateY(-2px);box-shadow:0 10px 32px rgba(0,0,0,.3);}
-.cc-icon{font-size:2rem;margin-bottom:.9rem;}
-.cc-title{font-family:var(--serif);font-weight:700;font-size:1.05rem;color:white;margin-bottom:.5rem;}
-.cc-sub{font-size:.82rem;color:rgba(255,255,255,.4);line-height:1.55;}
+.cc:hover{background:var(--ink);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.15);}
+.cc:hover .cc-title{color:white;}
+.cc-title{font-family:var(--serif);font-weight:700;font-size:1.15rem;color:var(--ink);transition:color .18s;}
 
 /* ── ASSESSMENT SCREEN ── */
 #assessment{display:none;height:100vh;flex-direction:column;overflow:hidden;}
 
 /* top bar */
 .top-bar{
-  background:#1a2820;color:white;
+  background:#fff;color:var(--ink);
   padding:.7rem 1.2rem;
   display:flex;align-items:center;gap:1rem;flex-shrink:0;flex-wrap:wrap;
-  border-bottom:1px solid rgba(255,255,255,.08);
+  border-bottom:2px solid var(--ink);
 }
 .back-btn{
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
-  color:rgba(255,255,255,.7);font-family:var(--sans);font-size:.78rem;font-weight:600;
-  padding:.32rem .85rem;border-radius:4px;cursor:pointer;transition:all .15s;white-space:nowrap;
+  background:#fff;border:1.5px solid var(--ink);
+  color:var(--ink);font-family:var(--sans);font-size:.78rem;font-weight:700;
+  padding:.3rem .85rem;border-radius:var(--rad);cursor:pointer;transition:all .15s;white-space:nowrap;
 }
-.back-btn:hover{color:white;background:rgba(255,255,255,.14);}
-.tb-course{font-family:var(--serif);font-size:.95rem;font-weight:700;color:#a8d8c8;white-space:nowrap;font-style:italic;}
+.back-btn:hover{background:var(--ink);color:white;}
+.tb-course{font-family:var(--serif);font-size:.95rem;font-weight:700;color:var(--ink);white-space:nowrap;font-style:italic;}
 .tb-inputs{display:flex;align-items:center;gap:.9rem;flex:1;flex-wrap:wrap;}
 .ti{display:flex;align-items:center;gap:.4rem;}
 .ti label{
   font-family:var(--sans);font-size:.7rem;font-weight:700;text-transform:uppercase;
-  letter-spacing:1.2px;color:rgba(255,255,255,.4);white-space:nowrap;
+  letter-spacing:1.2px;color:#777;white-space:nowrap;
 }
 .ti input{
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:4px;
-  color:white;font-family:var(--sans);font-size:.88rem;font-weight:500;
+  background:#fff;border:1.5px solid #ccc;border-radius:var(--rad);
+  color:var(--ink);font-family:var(--sans);font-size:.88rem;font-weight:500;
   padding:.28rem .65rem;outline:none;transition:border-color .15s;
 }
-.ti input:focus{border-color:#a8d8c8;}
-.ti input::placeholder{color:rgba(255,255,255,.25);font-weight:400;}
-.ti input.key{font-family:monospace;font-size:.78rem;width:170px;}
-.tb-date{font-size:.75rem;color:rgba(255,255,255,.32);white-space:nowrap;margin-left:auto;font-style:italic;}
+.ti input:focus{border-color:var(--ink);}
+.ti input::placeholder{color:#bbb;font-weight:400;}
+.tb-date{font-size:.78rem;color:#888;white-space:nowrap;margin-left:auto;font-style:italic;}
+
+/* assessment type selector */
+.atype-bar{
+  display:none;
+  align-items:center;gap:.7rem;padding:.5rem 1.2rem;
+  background:#f7f7f7;border-bottom:1px solid #ddd;
+  flex-shrink:0;flex-wrap:wrap;
+}
+.atype-bar.visible{display:flex;}
+.atype-label{font-family:var(--sans);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#666;}
+.atype-btn{
+  border:1.5px solid #ccc;border-radius:var(--rad);padding:.28rem .75rem;
+  font-family:var(--sans);font-size:.82rem;font-weight:600;
+  cursor:pointer;background:#fff;color:#666;transition:all .13s;
+}
+.atype-btn:hover{border-color:var(--ink);color:var(--ink);}
+.atype-btn.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+.atype-text-input{
+  border:1.5px solid #ccc;border-radius:var(--rad);
+  padding:.28rem .65rem;font-family:var(--sans);font-size:.82rem;
+  color:var(--ink);outline:none;transition:border-color .15s;
+  width:200px;display:none;
+}
+.atype-text-input.visible{display:inline-block;}
+.atype-text-input:focus{border-color:var(--ink);}
 
 /* body split */
 .assess-body{display:flex;flex:1;overflow:hidden;}
@@ -98,146 +114,148 @@ body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height
 .crit-col{
   flex:1;overflow-y:auto;padding:.9rem 1rem;
   display:flex;flex-direction:column;gap:.6rem;
-  background:var(--paper);
+  background:#fafafa;
 }
 
 /* summary col */
 .sum-col{
-  width:310px;flex-shrink:0;background:#1a2820;color:white;
+  width:300px;flex-shrink:0;background:#fff;color:var(--ink);
   display:flex;flex-direction:column;
-  border-left:1px solid rgba(255,255,255,.07);
+  border-left:2px solid var(--ink);
 }
 .sum-head{
   padding:.9rem 1rem .65rem;
   font-family:var(--sans);font-size:.7rem;font-weight:700;text-transform:uppercase;
-  letter-spacing:2.5px;color:rgba(255,255,255,.35);
-  border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0;
+  letter-spacing:2.5px;color:#888;
+  border-bottom:1px solid #ddd;flex-shrink:0;
 }
 .sum-body{flex:1;overflow-y:auto;padding:.75rem;}
 .sum-foot{
-  padding:.85rem;border-top:1px solid rgba(255,255,255,.08);
+  padding:.85rem;border-top:2px solid var(--ink);
   display:flex;flex-direction:column;gap:.45rem;flex-shrink:0;
 }
 
 /* criterion card */
 .crit-card{
   background:var(--card);
-  border:1px solid var(--rule);
-  border-left:3px solid var(--green-mid);
+  border:1px solid #ddd;
+  border-left:4px solid var(--ink);
   border-radius:var(--rad);
-  padding:.8rem 1rem;
-  transition:border-color .15s, box-shadow .15s;
+  padding:.85rem 1rem;
+  transition:box-shadow .15s;
 }
-.crit-card:focus-within{border-color:var(--green);border-left-color:var(--green);box-shadow:0 2px 12px rgba(69,116,102,.1);}
+.crit-card:focus-within{box-shadow:0 2px 10px rgba(0,0,0,.1);}
 .crit-row{display:flex;align-items:flex-start;gap:.8rem;margin-bottom:.5rem;flex-wrap:wrap;}
 .crit-meta{flex:1;min-width:120px;}
 .crit-name{
-  font-family:var(--serif);font-size:.95rem;font-weight:700;color:var(--ink);
+  font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--ink);
   letter-spacing:-.2px;
 }
 .crit-wt{
-  font-family:var(--sans);font-size:.72rem;color:var(--green);font-weight:600;
-  margin-left:.35rem;background:var(--green-pale);padding:.05rem .35rem;border-radius:3px;
+  font-family:var(--sans);font-size:.72rem;color:#fff;font-weight:700;
+  margin-left:.35rem;background:var(--ink);padding:.05rem .38rem;border-radius:3px;
 }
-.crit-hint{font-size:.8rem;color:var(--muted);line-height:1.4;margin-top:.2rem;font-style:italic;}
+.crit-hint{font-size:.82rem;color:var(--muted);line-height:1.4;margin-top:.2rem;font-style:italic;}
 .lvl-wrap{display:flex;gap:.4rem;flex-wrap:wrap;align-items:flex-start;}
 .lvl-btn{
-  border:1.5px solid var(--rule);border-radius:4px;padding:.3rem .7rem;
-  font-family:var(--sans);font-size:.8rem;font-weight:600;
-  cursor:pointer;transition:all .13s;background:var(--paper);color:var(--muted);
+  border:1.5px solid #bbb;border-radius:var(--rad);padding:.32rem .75rem;
+  font-family:var(--sans);font-size:.82rem;font-weight:600;
+  cursor:pointer;transition:all .13s;background:#fff;color:#666;
   white-space:nowrap;
 }
-.lvl-btn:hover{border-color:var(--ink);color:var(--ink);background:#fff;}
-.lvl-btn.af{background:var(--fail-bg);color:var(--fail-c);border-color:var(--fail-c);}
-.lvl-btn.ap{background:var(--poor-bg);color:var(--poor-c);border-color:var(--poor-c);}
-.lvl-btn.ar{background:var(--fair-bg);color:var(--fair-c);border-color:var(--fair-c);}
-.lvl-btn.ae{background:var(--excel-bg);color:var(--excel-c);border-color:var(--excel-c);}
+.lvl-btn:hover{border-color:var(--ink);color:var(--ink);}
+.lvl-btn.af {background:#fff0f0;color:#b22222;border-color:#b22222;font-weight:700;}
+.lvl-btn.ap {background:#fff4e8;color:#c05800;border-color:#c05800;font-weight:700;}
+.lvl-btn.abe{background:#fffbe6;color:#7a6000;border-color:#7a6000;font-weight:700;}
+.lvl-btn.ar {background:#eef5fb;color:#1a5e8a;border-color:#1a5e8a;font-weight:700;}
+.lvl-btn.ag {background:#e8f4fb;color:#2471a3;border-color:#2471a3;font-weight:700;}
+.lvl-btn.avg{background:#eef8f3;color:#1e7a4a;border-color:#1e7a4a;font-weight:700;}
+.lvl-btn.ae {background:#e8f5ee;color:#145a32;border-color:#145a32;font-weight:700;}
+
+/* manual score input */
+.score-input-wrap{display:flex;align-items:center;gap:.4rem;margin-top:.35rem;}
+.score-input-wrap label{font-family:var(--sans);font-size:.72rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.8px;white-space:nowrap;}
+.score-input{
+  width:60px;border:1.5px solid #ccc;border-radius:var(--rad);
+  padding:.28rem .5rem;font-family:var(--sans);font-size:.9rem;font-weight:700;
+  color:var(--ink);text-align:center;outline:none;transition:border-color .15s;background:#fff;
+}
+.score-input:focus{border-color:var(--ink);}
+.score-badge{
+  font-family:var(--sans);font-size:.75rem;font-weight:700;
+  padding:.15rem .5rem;border-radius:3px;background:#f0f0f0;color:#555;
+}
 .crit-notes{
   width:100%;
-  border:1px solid var(--rule);border-radius:4px;
+  border:1px solid #ccc;border-radius:var(--rad);
   padding:.45rem .7rem;
   font-family:var(--sans);font-size:.9rem;color:var(--ink);
-  background:#fdfcfa;
+  background:#fff;
   resize:vertical;min-height:52px;max-height:110px;
   outline:none;transition:border-color .15s;line-height:1.55;
 }
-.crit-notes:focus{border-color:var(--green);background:white;}
-.crit-notes::placeholder{color:#c0bab4;}
+.crit-notes:focus{border-color:var(--ink);}
+.crit-notes::placeholder{color:#bbb;}
 
 /* overall row */
 .overall-row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;}
-.ovb{
-  background:var(--card);border:1px solid var(--rule);border-radius:var(--rad);
-  padding:.8rem 1rem;
-}
+.ovb{background:var(--card);border:1px solid #ddd;border-radius:var(--rad);padding:.85rem 1rem;}
 .ovb label{
   display:block;font-family:var(--sans);font-size:.75rem;font-weight:700;
-  text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.35rem;
+  text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.35rem;color:var(--ink);
 }
-.ovb.went label{color:var(--excel-c);}
-.ovb.improve label{color:var(--poor-c);}
 .ovb textarea{
   width:100%;border:none;background:transparent;
   font-family:var(--sans);font-size:.9rem;color:var(--ink);
   resize:none;height:58px;outline:none;line-height:1.55;
 }
-.ovb textarea::placeholder{color:#c0bab4;}
+.ovb textarea::placeholder{color:#ccc;}
 
 /* summary chips */
 .sc{
-  border-radius:4px;padding:.45rem .65rem;margin-bottom:.35rem;
+  border-radius:var(--rad);padding:.45rem .65rem;margin-bottom:.35rem;
   display:flex;align-items:center;justify-content:space-between;gap:.4rem;
+  border:1px solid #e8e8e8;
 }
-.sc .sc-n{
-  font-family:var(--sans);font-size:.75rem;font-weight:600;
-  color:rgba(255,255,255,.55);flex:1;
-}
+.sc .sc-n{font-family:var(--sans);font-size:.78rem;font-weight:700;color:#444;flex:1;}
 .sc .sc-l{font-family:var(--sans);font-size:.82rem;font-weight:700;}
-.sc .sc-s{font-family:var(--sans);font-size:.72rem;color:rgba(255,255,255,.38);}
-.s-fail{background:rgba(160,40,40,.22);}
-.s-poor{background:rgba(176,106,0,.22);}
-.s-fair{background:rgba(26,94,138,.22);}
-.s-excellent{background:rgba(30,122,74,.22);}
-.s-none{background:rgba(255,255,255,.04);}
+.sc .sc-s{font-family:var(--sans);font-size:.72rem;color:#888;}
+.s-fail    {background:#fff0f0;}
+.s-poor    {background:#fff4e8;}
+.s-below   {background:#fffbe6;}
+.s-fair    {background:#eef5fb;}
+.s-good    {background:#e8f4fb;}
+.s-verygood{background:#eef8f3;}
+.s-excellent{background:#e8f5ee;}
+.s-none    {background:#f5f5f5;}
 .sum-total{
-  font-family:var(--serif);font-size:2rem;font-weight:700;color:white;
+  font-family:var(--serif);font-size:2.2rem;font-weight:700;color:var(--ink);
   text-align:center;padding:.5rem 0 .1rem;letter-spacing:-.5px;
 }
-.sum-total span{color:#a8d8c8;}
 .sum-tlabel{
-  text-align:center;font-size:.7rem;color:rgba(255,255,255,.32);
+  text-align:center;font-size:.7rem;color:#888;
   text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.55rem;
   font-family:var(--sans);
 }
 
 /* buttons */
 .btn{
-  font-family:var(--sans);font-weight:600;font-size:.82rem;
-  padding:.6rem 1rem;border-radius:4px;border:none;cursor:pointer;
+  font-family:var(--sans);font-weight:700;font-size:.82rem;
+  padding:.6rem 1rem;border-radius:var(--rad);border:none;cursor:pointer;
   transition:all .17s;width:100%;letter-spacing:.3px;
 }
-
-.btn-rst{background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1);}
-.btn-rst:hover{color:white;background:rgba(255,255,255,.12);}
-.btn-prt{background:rgba(255,255,255,.06);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);}
-.btn-prt:hover{color:white;background:rgba(255,255,255,.12);}
-
-
+.btn-rst{background:#fff;color:#666;border:1.5px solid #ccc;}
+.btn-rst:hover{border-color:var(--ink);color:var(--ink);}
+.btn-prt{background:var(--ink);color:#fff;border:1.5px solid var(--ink);}
+.btn-prt:hover{background:#333;}
 
 /* note items in summary */
-.ni{margin-bottom:.55rem;padding-bottom:.55rem;border-bottom:1px solid rgba(255,255,255,.06);}
+.ni{margin-bottom:.55rem;padding-bottom:.55rem;border-bottom:1px solid #eee;}
 .ni:last-child{border-bottom:none;}
-.ni-crit{
-  font-family:var(--sans);font-size:.68rem;font-weight:700;text-transform:uppercase;
-  letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:.15rem;
-}
-.ni-text{font-size:.88rem;line-height:1.52;color:rgba(255,255,255,.82);}
-
-.divider{height:1px;background:rgba(255,255,255,.07);margin:.55rem 0;}
-.section-lbl{
-  font-family:var(--sans);font-size:.65rem;font-weight:700;text-transform:uppercase;
-  letter-spacing:2px;color:rgba(255,255,255,.3);margin-bottom:.4rem;
-}
+.ni-crit{font-family:var(--sans);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#888;margin-bottom:.15rem;}
+.ni-text{font-size:.88rem;line-height:1.52;color:var(--ink);}
+.divider{height:1px;background:#eee;margin:.55rem 0;}
+.section-lbl{font-family:var(--sans);font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#aaa;margin-bottom:.4rem;}
 
 @media(max-width:720px){.sum-col{display:none;}.overall-row{grid-template-columns:1fr;}}
 </style>
@@ -251,19 +269,13 @@ body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height
   <div class="wl-sub">Select a course to begin</div>
   <div class="cc-wrap">
     <div class="cc" onclick="launch('y1')">
-      <div class="cc-icon">📘</div>
       <div class="cc-title">1st Year English</div>
-      <div class="cc-sub">Grammar · Vocabulary · Pronunciation · Content · Form<br><br>Graded /20 &nbsp;(4 levels)</div>
     </div>
     <div class="cc" onclick="launch('y2')">
-      <div class="cc-icon">📗</div>
       <div class="cc-title">2nd Year English</div>
-      <div class="cc-sub">Grammar · Vocabulary · Pronunciation · Content · Form<br><br>B1+ level · Graded /20</div>
     </div>
     <div class="cc" onclick="launch('b2b')">
-      <div class="cc-icon">🤝</div>
       <div class="cc-title">Sales Techniques</div>
-      <div class="cc-sub">Art of B2B Selling<br>Contact · Search · Convince · Conclude · Delivery<br>+ Company & Product fields</div>
     </div>
   </div>
 </div>
@@ -275,10 +287,17 @@ body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height
     <div class="tb-course" id="tb-course"></div>
     <div class="tb-inputs">
       <div class="ti"><label>Student</label><input type="text" id="inp-student" placeholder="Name…"></div>
+      <div class="ti"><label>Group</label><input type="text" id="inp-group" placeholder="Group…" style="width:90px"></div>
       <div class="ti" id="grp-company" style="display:none"><label>Company</label><input type="text" id="inp-company" placeholder="Company represented…" style="width:150px"></div>
       <div class="ti" id="grp-product" style="display:none"><label>Product(s)</label><input type="text" id="inp-product" placeholder="Product(s) presented…" style="width:150px"></div>
     </div>
     <div class="tb-date" id="tb-date"></div>
+  </div>
+  <div class="atype-bar" id="atype-bar">
+    <span class="atype-label">Assessment type:</span>
+    <button class="atype-btn" id="atype-exam" onclick="setAtype('exam')">Exam</button>
+    <button class="atype-btn" id="atype-ca" onclick="setAtype('ca')">Continuous Assessment</button>
+    <input class="atype-text-input" id="atype-ca-text" type="text" placeholder="Description (optional)…">
   </div>
   <div class="assess-body">
     <div class="crit-col" id="crit-col"></div>
@@ -299,95 +318,131 @@ body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height
 const COURSES = {
   y1: {
     label: '1st Year English',
-    type: 'y1',
+    type: 'graded',
     levels: [
-      {key:'fail',      label:'Fail',      cls:'af', color:'#c0392b', mid:2},
-      {key:'poor',      label:'Poor',      cls:'ap', color:'#d4860a', mid:8},
-      {key:'fair',      label:'Fair',      cls:'ar', color:'#2980b9', mid:12},
-      {key:'excellent', label:'Excellent', cls:'ae', color:'#27ae60', mid:17},
+      {key:'fail',         label:'Fail',         cls:'af',  color:'#b22222', range:[1,1]},
+      {key:'poor',         label:'Poor',         cls:'ap',  color:'#c05800', range:[4,7]},
+      {key:'below',        label:'Below Avg.',   cls:'abe', color:'#7a6000', range:[8,9]},
+      {key:'fair',         label:'Fair',         cls:'ar',  color:'#1a5e8a', range:[10,11]},
+      {key:'good',         label:'Good',         cls:'ag',  color:'#2471a3', range:[12,13]},
+      {key:'verygood',     label:'Very Good',    cls:'avg', color:'#1e7a4a', range:[14,15]},
+      {key:'excellent',    label:'Excellent',    cls:'ae',  color:'#145a32', range:[16,20]},
     ],
     criteria: [
       {id:'grammar', name:'Grammar', hint:'Sentence structure, tenses, accuracy.',
        comments:{
          fail:      'Uses only isolated words or very basic phrases. Frequent errors make meaning consistently unclear.',
-         poor:      'Limited sentence structure, frequent errors, and unclear meaning.',
+         poor:      'Limited sentence structure with frequent errors. Meaning is often unclear.',
+         below:     'Basic structures used with recurring errors. Meaning is generally unclear but occasionally decipherable.',
          fair:      'Simple structures used, complex structures attempted with errors. Meaning remains clear or possible.',
+         good:      'Generally accurate use of simple and some complex structures. Occasional errors but meaning is clear.',
+         verygood:  'Good control of a range of structures with only minor errors. Meaning is consistently clear.',
          excellent: 'Uses complex structures with ease, ensuring clear and precise meaning.'
        }},
       {id:'vocabulary', name:'Vocabulary', hint:'Range, precision, topic-specific language.',
        comments:{
-         fail:      'Limited vocabulary and difficulty expressing opinions.',
+         fail:      'Very limited vocabulary. Struggles to express basic ideas.',
          poor:      'Limited vocabulary, frequent inaccuracies, and basic topics only.',
-         fair:      'Discusses topics with ease, but struggles with abstract concepts. Vocabulary is adequate but lacks precision and variety at times.',
+         below:     'Limited range; relies on repetition and simple words. Difficulty with topic-specific vocabulary.',
+         fair:      'Adequate vocabulary for familiar topics. Lacks precision and variety at times.',
+         good:      'Discusses topics with reasonable ease. Some gaps in range but generally appropriate word choice.',
+         verygood:  'Good range and generally precise vocabulary. Occasional imprecision with abstract or nuanced concepts.',
          excellent: 'Uses a rich and varied vocabulary with high precision.'
        }},
       {id:'pronunciation', name:'Pronunciation', hint:'Clarity of sounds, intonation, stress.',
        comments:{
-         fail:      'Communication breakdown due to unintelligible pronunciation and ineffective intonation.',
-         poor:      'Pronunciation is unclear and intonation is rarely used effectively.',
-         fair:      'Pronunciation is clear with minor errors and effective intonation.',
+         fail:      'Pronunciation causes communication breakdown. Largely unintelligible.',
+         poor:      'Pronunciation is frequently unclear. Intonation is rarely used effectively.',
+         below:     'Some sounds are unclear and intonation is inconsistent. Listener effort required.',
+         fair:      'Pronunciation is generally intelligible with noticeable errors. Some intonation.',
+         good:      'Pronunciation is clear with occasional errors. Intonation is mostly appropriate.',
+         verygood:  'Pronunciation is clear and mostly natural. Good use of stress and intonation.',
          excellent: 'Pronunciation is clear and natural, using intonation and stress effectively.'
        }},
       {id:'content', name:'Content', hint:'Alignment with instructions, depth, autonomy.',
        comments:{
-         fail:      'Not aligned with instructions.',
-         poor:      'Requires support to maintain communication. Content is incomplete at times. Frequent lack of information.',
-         fair:      'Requires minimal support to maintain communication. Content lacks precision and variety at times.',
-         excellent: 'Maintains communication autonomously, with no need for support. Content fully aligned with instructions.'
+         fail:      'Not aligned with instructions. Content is absent or irrelevant.',
+         poor:      'Requires frequent support to maintain communication. Content is often incomplete.',
+         below:     'Requires support at times. Content partially addresses the task but lacks depth.',
+         fair:      'Requires minimal support. Content is relevant but may lack precision or variety.',
+         good:      'Communicates with reasonable autonomy. Content is relevant and mostly complete.',
+         verygood:  'Communicates autonomously with good depth. Minor gaps in content or precision.',
+         excellent: 'Communicates fully autonomously. Content is well-aligned, precise, and thorough.'
        }},
       {id:'form', name:'Form', hint:'Delivery, body language, engagement, materials.',
        comments:{
-         fail:      'Ineffective content delivery with no engagement, poor nonverbal communication, and irrelevant materials.',
-         poor:      'Poor communication skills, including frequent hesitation, poor body language, and minimal engagement.',
-         fair:      'Delivers content clearly with confident body language and good audience engagement. Mostly accurate materials, adapts delivery to audience needs.',
+         fail:      'Ineffective delivery with no engagement, poor nonverbal communication, and irrelevant materials.',
+         poor:      'Frequent hesitation, poor body language, and minimal audience engagement.',
+         below:     'Delivery is hesitant and lacks structure. Limited use of body language or audience awareness.',
+         fair:      'Delivers content with some clarity. Body language and engagement are present but inconsistent.',
+         good:      'Generally clear delivery with reasonable body language and audience engagement.',
+         verygood:  'Confident and clear delivery. Good use of body language and mostly effective audience engagement.',
          excellent: 'Delivers content clearly and confidently, using well-designed materials and adapting effectively to audience needs.'
        }},
     ]
   },
   y2: {
     label: '2nd Year English',
-    type: 'y1',
+    type: 'graded',
     levels: [
-      {key:'fail',      label:'Fail',      cls:'af', color:'#a02828', mid:2},
-      {key:'poor',      label:'Poor',      cls:'ap', color:'#b06a00', mid:8},
-      {key:'fair',      label:'Fair',      cls:'ar', color:'#1a5e8a', mid:12},
-      {key:'excellent', label:'Excellent', cls:'ae', color:'#1e7a4a', mid:17},
+      {key:'fail',         label:'Fail',         cls:'af',  color:'#b22222', range:[1,1]},
+      {key:'poor',         label:'Poor',         cls:'ap',  color:'#c05800', range:[4,7]},
+      {key:'below',        label:'Below Avg.',   cls:'abe', color:'#7a6000', range:[8,9]},
+      {key:'fair',         label:'Fair',         cls:'ar',  color:'#1a5e8a', range:[10,11]},
+      {key:'good',         label:'Good',         cls:'ag',  color:'#2471a3', range:[12,13]},
+      {key:'verygood',     label:'Very Good',    cls:'avg', color:'#1e7a4a', range:[14,15]},
+      {key:'excellent',    label:'Excellent',    cls:'ae',  color:'#145a32', range:[16,20]},
     ],
     criteria: [
       {id:'grammar', name:'Grammar', hint:'Accuracy and range of structures at B1+ level.',
        comments:{
          fail:      'Uses only isolated words or memorised phrases. Errors are pervasive and prevent communication.',
-         poor:      'Relies on simple structures with frequent grammatical errors. Complex forms are attempted but mostly inaccurate.',
-         fair:      'Uses a range of structures with reasonable accuracy. Attempts more complex forms; errors occur but rarely impede meaning.',
+         poor:      'Relies heavily on simple structures with frequent errors. Complex forms are attempted but mostly inaccurate.',
+         below:     'Simple structures are used with recurring errors. Complex forms are attempted but often incorrect.',
+         fair:      'Uses a range of structures with reasonable accuracy. Errors occur but rarely impede meaning.',
+         good:      'Good command of a range of structures including some complex forms. Occasional errors, mostly self-corrected.',
+         verygood:  'Consistent accuracy across a range of structures. Complex forms used effectively with few errors.',
          excellent: 'Demonstrates consistent control of a wide range of structures, including complex forms, with only occasional slips.'
        }},
       {id:'vocabulary', name:'Vocabulary', hint:'Range, precision and register at B1+ level.',
        comments:{
          fail:      'Very limited vocabulary. Frequent errors in word choice make understanding difficult.',
-         poor:      'Basic vocabulary with noticeable gaps. Relies on general terms and circumlocution; limited range for abstract or professional topics.',
-         fair:      'Adequate vocabulary to discuss most topics. Uses some topic-specific language but may lack precision or variety in abstract contexts.',
-         excellent: 'Good range of vocabulary, including topic-specific and semi-formal register. Precise word choice with effective use of collocations and expressions.'
+         poor:      'Basic vocabulary with noticeable gaps. Relies on general terms; limited range for professional or abstract topics.',
+         below:     'Limited range with recurring imprecision. Struggles with topic-specific and semi-formal vocabulary.',
+         fair:      'Adequate vocabulary for most topics. Some topic-specific language used, but lacks precision and variety at times.',
+         good:      'Good vocabulary for professional and abstract contexts. Mostly accurate word choice with occasional imprecision.',
+         verygood:  'Wide and precise vocabulary including topic-specific and semi-formal registers. Good use of collocations.',
+         excellent: 'Rich and precise vocabulary. Effective use of collocations, expressions, and appropriate register throughout.'
        }},
       {id:'pronunciation', name:'Pronunciation', hint:'Intelligibility, stress and intonation at B1+ level.',
        comments:{
          fail:      'Pronunciation causes frequent communication breakdowns. Intonation and stress are largely ineffective.',
-         poor:      'Pronunciation is sometimes unclear, requiring effort from the listener. Intonation is inconsistent.',
-         fair:      'Generally clear pronunciation. Some errors in sounds or stress but these rarely impede understanding. Intonation is mostly appropriate.',
+         poor:      'Pronunciation is often unclear. Intonation is inconsistent and stress is frequently misplaced.',
+         below:     'Pronunciation requires listener effort. Some improvement in intonation but stress patterns are inconsistent.',
+         fair:      'Generally intelligible pronunciation with some errors in sounds or stress. Intonation is mostly appropriate.',
+         good:      'Clear pronunciation with only occasional errors. Intonation and stress are generally accurate.',
+         verygood:  'Clear and mostly natural pronunciation. Good control of stress and intonation to convey meaning.',
          excellent: 'Clear, natural-sounding pronunciation. Effective use of stress and intonation to convey meaning and engage the listener.'
        }},
       {id:'content', name:'Content', hint:'Relevance, development and accuracy of ideas.',
        comments:{
          fail:      'Content is largely irrelevant or too minimal to assess. Does not address the task.',
          poor:      'Content is partially relevant but underdeveloped. Key information is missing or imprecise.',
-         fair:      'Content is relevant and covers the main points of the task. Some development of ideas, though depth or precision may be lacking at times.',
-         excellent: 'Content is fully relevant, well-developed and detailed. Ideas are clearly articulated and the task is addressed with confidence and accuracy.'
+         below:     'Content addresses the task superficially. Some relevant points but lacks development and detail.',
+         fair:      'Content is relevant and covers the main points. Some development of ideas, though depth may be lacking at times.',
+         good:      'Content is relevant and reasonably well-developed. Ideas are expressed with clarity and appropriate detail.',
+         verygood:  'Content is relevant, well-developed and detailed. Ideas are clearly and accurately articulated.',
+         excellent: 'Content is fully relevant, well-developed and detailed. Task addressed with confidence, precision and depth.'
        }},
       {id:'form', name:'Form', hint:'Delivery, coherence, structure and engagement.',
        comments:{
          fail:      'Delivery is very hesitant or unclear. No discernible structure or audience awareness.',
-         poor:      'Delivery is inconsistent, with noticeable hesitation and limited coherence. Audience engagement is minimal.',
-         fair:      'Delivers content in a generally clear and organised manner. Some use of discourse markers and reasonable audience engagement.',
-         excellent: 'Confident, fluent and well-structured delivery. Effective use of linking devices and discourse markers. Strong audience engagement throughout.'
+         poor:      'Delivery is inconsistent with noticeable hesitation and limited coherence. Audience engagement is minimal.',
+         below:     'Delivery lacks fluency and structure. Some coherence but hesitation and limited audience awareness.',
+         fair:      'Delivers content in a generally clear and organised manner. Some use of discourse markers and reasonable engagement.',
+         good:      'Clear and organised delivery with good use of discourse markers. Generally confident audience engagement.',
+         verygood:  'Fluent and well-structured delivery. Effective use of linking devices and strong audience engagement.',
+         excellent: 'Confident, fluent and well-structured delivery. Highly effective use of discourse markers. Outstanding audience engagement.'
        }},
     ]
   },
@@ -444,10 +499,14 @@ const COURSES = {
 
 let cur = null;
 let ratings = {};
+let manualScores = {};
+let assessType = null;
+let assessTypeText = '';
 
 function launch(key) {
   cur = key;
   ratings = {};
+  manualScores = {};
   const c = COURSES[key];
   document.getElementById('welcome').style.display = 'none';
   document.getElementById('assessment').style.display = 'flex';
@@ -458,6 +517,14 @@ function launch(key) {
   document.getElementById('inp-product').value = '';
   document.getElementById('grp-company').style.display = c.showCompany ? 'flex' : 'none';
   document.getElementById('grp-product').style.display = c.showProduct ? 'flex' : 'none';
+  // Show assessment type bar only for y1 and y2
+  const atypeBar = document.getElementById('atype-bar');
+  atypeBar.classList.toggle('visible', key === 'y1' || key === 'y2');
+  assessType = null; assessTypeText = '';
+  document.getElementById('atype-exam').classList.remove('active');
+  document.getElementById('atype-ca').classList.remove('active');
+  document.getElementById('atype-ca-text').classList.remove('visible');
+  document.getElementById('atype-ca-text').value = '';
   buildCriteria(c);
   refreshSummary();
 }
@@ -465,6 +532,15 @@ function launch(key) {
 function goHome() {
   document.getElementById('assessment').style.display = 'none';
   document.getElementById('welcome').style.display = 'flex';
+  assessType = null; assessTypeText = '';
+}
+
+function setAtype(type) {
+  assessType = type;
+  document.getElementById('atype-exam').classList.toggle('active', type === 'exam');
+  document.getElementById('atype-ca').classList.toggle('active', type === 'ca');
+  const inp = document.getElementById('atype-ca-text');
+  inp.classList.toggle('visible', type === 'ca');
 }
 
 function buildCriteria(c) {
@@ -478,6 +554,13 @@ function buildCriteria(c) {
     const btns = c.levels.map(l =>
       `<button class="lvl-btn" data-crit="${cr.id}" data-lk="${l.key}" onclick="pick(\'${cr.id}\',\'${l.key}\',this)">${l.label}</button>`
     ).join('');
+    const manualInput = c.type === 'graded' ? `
+      <div class="score-input-wrap">
+        <label>Score:</label>
+        <input class="score-input" type="number" id="sc-${cr.id}" min="0" max="20" step="1"
+          placeholder="—" oninput="setManual('${cr.id}', this.value)">
+        <span class="score-badge">/20</span>
+      </div>` : '';
     card.innerHTML = `
       <div class="crit-row">
         <div class="crit-meta">
@@ -486,7 +569,8 @@ function buildCriteria(c) {
         </div>
         <div class="lvl-wrap">${btns}</div>
       </div>
-      <textarea class="crit-notes" id="nt-${cr.id}" placeholder="Notes on ${cr.name.toLowerCase()}\u2026" oninput="refreshSummary()"></textarea>`;
+      ${manualInput}
+      <textarea class="crit-notes" id="nt-${cr.id}" placeholder="Notes on ${cr.name.toLowerCase()}\u2026" oninput="refreshSummary();if(COURSES[cur].type==='graded')autoFillOverall(COURSES[cur]);"></textarea>`;
     col.appendChild(card);
   });
   const ov = document.createElement('div');
@@ -497,13 +581,47 @@ function buildCriteria(c) {
   col.appendChild(ov);
 }
 
+// Pending pick state for modal confirmation
+let pendingPick = null;
+
 function pick(critId, levelKey, btn) {
+  const c = COURSES[cur];
+  const ta = document.getElementById(`nt-${critId}`);
+  const existingNote = ta?.value.trim();
+
+  // If there's already a personalised note, show confirmation modal
+  if (existingNote && ratings[critId] && ratings[critId] !== levelKey) {
+    pendingPick = { critId, levelKey, btn };
+    document.getElementById('modal-preview').value = existingNote;
+    document.getElementById('overwrite-modal').style.display = 'flex';
+    return;
+  }
+  applyPick(critId, levelKey, btn);
+}
+
+function confirmPick() {
+  document.getElementById('overwrite-modal').style.display = 'none';
+  if (pendingPick) {
+    const { critId, levelKey } = pendingPick;
+    pendingPick = null;
+    // Re-query the button from the DOM to avoid stale reference
+    const btn = document.querySelector(`[data-crit="${critId}"][data-lk="${levelKey}"]`);
+    applyPick(critId, levelKey, btn);
+  }
+}
+
+function closeModal() {
+  document.getElementById('overwrite-modal').style.display = 'none';
+  pendingPick = null;
+}
+
+function applyPick(critId, levelKey, btn) {
   ratings[critId] = levelKey;
   const c = COURSES[cur];
   document.querySelectorAll(`[data-crit="${critId}"]`).forEach(b => b.className = 'lvl-btn');
   const lv = c.levels.find(l => l.key === levelKey);
   btn.className = `lvl-btn ${lv.cls}`;
-  // Auto-fill generic comment into textarea
+  // Auto-fill comment
   const ta = document.getElementById(`nt-${critId}`);
   const cr = c.criteria.find(x => x.id === critId);
   if (cr && cr.comments && cr.comments[levelKey]) {
@@ -511,15 +629,75 @@ function pick(critId, levelKey, btn) {
     ta.style.height = 'auto';
     ta.style.height = Math.min(ta.scrollHeight, 90) + 'px';
   }
+  // Always update score for graded courses
+  if (c.type === 'graded') {
+    const mid = Math.round((lv.range[0] + lv.range[1]) / 2);
+    const inp = document.getElementById(`sc-${critId}`);
+    if (inp) { inp.value = mid; manualScores[critId] = mid; }
+  }
+  if (c.type === 'graded') autoFillOverall(c);
+  refreshSummary();
+}
+
+const GOOD_OR_ABOVE = ['good','verygood','excellent'];
+const FAIR_OR_BELOW = ['fail','poor','below','fair'];
+
+// Convert a third-person comment to second person ("you" form)
+function toYouForm(text) {
+  return text
+    .replace(/\bhe\/she\b/gi, 'you')
+    .replace(/\bhe or she\b/gi, 'you')
+    .replace(/\bthe student\b/gi, 'you')
+    .replace(/\bthe candidate\b/gi, 'you')
+    .replace(/\bthe speaker\b/gi, 'you')
+    .replace(/\b(Uses|Demonstrates|Delivers|Maintains|Relies|Relies|Requires|Asks|Communicates|Discusses|Proposes|Verifies|Displays|Shows|Has|Produces|Performs|Employs|Achieves|Applies|Develops|Presents|Addresses|Articulates|Controls|Attempts)\b/g,
+      (m) => 'You ' + m.charAt(0).toLowerCase() + m.slice(1))
+    .replace(/\b(Limited|Frequent|Poor|Ineffective|Absent)\b/g,
+      (m) => 'Your ' + m.charAt(0).toLowerCase() + m.slice(1))
+    .replace(/^You you /i, 'You ')  // fix double "you you"
+    .trim();
+}
+
+function autoFillOverall(c) {
+  const wentLines = [];
+  const improveLines = [];
+  c.criteria.forEach(cr => {
+    const r = ratings[cr.id];
+    if (!r) return;
+    const rawNote = document.getElementById(`nt-${cr.id}`)?.value.trim() || '';
+    const note = rawNote ? toYouForm(rawNote) : cr.name;
+    if (GOOD_OR_ABOVE.includes(r)) wentLines.push(`${cr.name}: ${note}`);
+    else if (FAIR_OR_BELOW.includes(r)) improveLines.push(`${cr.name}: ${note}`);
+  });
+  const wwEl = document.getElementById('nt-went');
+  const ciEl = document.getElementById('nt-improve');
+  if (wwEl) wwEl.value = wentLines.join('\n\n');
+  if (ciEl) ciEl.value = improveLines.join('\n\n');
+}
+
+function setManual(critId, val) {
+  const v = parseFloat(val);
+  manualScores[critId] = (!isNaN(v) && v >= 0 && v <= 20) ? v : null;
+  const c = COURSES[cur];
+  if (c.type !== 'graded' || manualScores[critId] === null) { refreshSummary(); return; }
+  const score = manualScores[critId];
+  const matchedLv = c.levels.find(l => score >= l.range[0] && score <= l.range[1]);
+  if (matchedLv) {
+    ratings[critId] = matchedLv.key;
+    document.querySelectorAll(`[data-crit="${critId}"]`).forEach(b => b.className = 'lvl-btn');
+    const matchBtn = document.querySelector(`[data-crit="${critId}"][data-lk="${matchedLv.key}"]`);
+    if (matchBtn) matchBtn.className = `lvl-btn ${matchedLv.cls}`;
+  }
+  autoFillOverall(c);
   refreshSummary();
 }
 
 function scoreToTwenty(c) {
-  if (c.type === 'y1') {
-    const rated = c.criteria.filter(cr => ratings[cr.id]);
-    if (!rated.length) return null;
-    const sum = rated.reduce((acc, cr) => acc + c.levels.find(l => l.key === ratings[cr.id]).mid, 0);
-    return (sum / rated.length).toFixed(1);
+  if (c.type === 'graded') {
+    const scored = c.criteria.filter(cr => manualScores[cr.id] !== null && manualScores[cr.id] !== undefined);
+    if (!scored.length) return null;
+    const sum = scored.reduce((acc, cr) => acc + manualScores[cr.id], 0);
+    return (sum / scored.length).toFixed(1);
   } else {
     let wtSum = 0, wtMax = 0;
     c.criteria.forEach(cr => {
@@ -545,8 +723,9 @@ function refreshSummary() {
     const chip = document.createElement('div');
     chip.className = `sc ${r ? 's-'+r : 's-none'}`;
     let scoreStr = '';
-    if (r && c.type === 'y1') {
-      scoreStr = `${lv.mid}/20`;
+    if (c.type === 'graded') {
+      const ms = manualScores[cr.id];
+      scoreStr = (ms !== null && ms !== undefined) ? `${ms}/20` : '';
     } else if (r && c.type === 'weighted' && cr.wt) {
       const contrib = (lv.pct / 100) * (cr.wt / 100) * 20;
       scoreStr = `${contrib.toFixed(2)} pts`;
@@ -567,10 +746,13 @@ function resetAll() {
   const c = COURSES[cur];
   c.criteria.forEach(cr => {
     ratings[cr.id] = null;
+    manualScores[cr.id] = null;
     document.querySelectorAll(`[data-crit="${cr.id}"]`).forEach(b => b.className = 'lvl-btn');
     const ta = document.getElementById(`nt-${cr.id}`); if (ta) ta.value = '';
+    const sc = document.getElementById(`sc-${cr.id}`); if (sc) sc.value = '';
   });
   document.getElementById('inp-student').value = '';
+  document.getElementById('inp-group').value = '';
   ['nt-went','nt-improve'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
   refreshSummary();
 }
@@ -578,47 +760,96 @@ function resetAll() {
 function doPrint() {
   const c = COURSES[cur];
   const name    = document.getElementById('inp-student').value.trim() || 'Student';
+  const group   = document.getElementById('inp-group')?.value.trim() || '';
   const date    = document.getElementById('tb-date').textContent;
   const company = document.getElementById('inp-company')?.value.trim() || '';
   const product = document.getElementById('inp-product')?.value.trim() || '';
   const ww      = document.getElementById('nt-went')?.value.trim() || '';
   const ci      = document.getElementById('nt-improve')?.value.trim() || '';
+  const score   = scoreToTwenty(c);
+
+  const atypeEl = document.getElementById('atype-ca-text');
+  const atypeStr = assessType === 'exam' ? 'Exam'
+    : assessType === 'ca' ? ('Continuous Assessment' + (atypeEl && atypeEl.value.trim() ? ' \u2014 ' + atypeEl.value.trim() : ''))
+    : '';
+
+  const levelColors = { fail:'#a02828', poor:'#8a5200', fair:'#1a5e8a', excellent:'#1e7a4a' };
 
   const rows = c.criteria.map(cr => {
     const r  = ratings[cr.id];
     const lv = r ? c.levels.find(l => l.key === r) : null;
     const nt = document.getElementById(`nt-${cr.id}`)?.value.trim() || '';
+    const col = lv ? levelColors[lv.key] : '#aaa';
+    const ms = manualScores[cr.id];
+    const scoreCell = c.type === 'graded'
+      ? `<td style="padding:7px 10px;border-bottom:1px solid #eee;font-size:13px;font-weight:700;text-align:center;">${ms !== null && ms !== undefined ? ms + '/20' : '—'}</td>`
+      : '';
     return `<tr>
-      <td style="padding:7px 10px;border-bottom:1px solid #eee;font-size:13px;font-weight:600">${cr.name}${cr.wt?` <span style="color:#999;font-weight:400">(${cr.wt}%)</span>`:''}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #eee;">
-        ${lv ? `<span style="background:${lv.color}18;color:${lv.color};border:1px solid ${lv.color};border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700">${lv.label.split(' ')[0]}</span>` : '<span style="color:#ccc">—</span>'}
+      <td style="padding:7px 10px;border-bottom:1px solid #eee;font-size:13px;font-weight:700;">${cr.name}${cr.wt ? ` <span style="color:#999;font-weight:400">(${cr.wt}%)</span>` : ''}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #eee;white-space:nowrap;">
+        ${lv ? `<span style="background:${col}18;color:${col};border:1px solid ${col};border-radius:3px;padding:2px 8px;font-size:11px;font-weight:700;">${lv.label}</span>` : '<span style="color:#ccc">\u2014</span>'}
       </td>
-      <td style="padding:7px 10px;border-bottom:1px solid #eee;font-size:12px;color:#555">${nt||'—'}</td>
+      ${scoreCell}
+      <td style="padding:7px 10px;border-bottom:1px solid #eee;font-size:13px;color:#333;">${nt || '\u2014'}</td>
     </tr>`;
   }).join('');
 
-  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Assessment — ${name}</title>
-  <style>body{font-family:Georgia,serif;max-width:740px;margin:36px auto;padding:0 20px;color:#1a1a1a}
-  h1{font-size:20px;margin-bottom:3px}.meta{color:#888;font-size:12px;margin-bottom:5px}.info{font-size:12px;color:#555;margin-bottom:18px}
-  table{width:100%;border-collapse:collapse;margin-bottom:20px}th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#aaa;padding:5px 10px;border-bottom:2px solid #eee}
-  .st{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#aaa;margin:18px 0 8px}
-  .og{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ob{border:1px solid #eee;border-radius:7px;padding:12px 14px}
-  .ob h3{font-size:10px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}.ob p{font-size:12px;line-height:1.6;color:#444}
-  .went h3{color:#27ae60}.improve h3{color:#d4860a}@media print{@page{margin:1.4cm}}</style></head><body>
-  <h1>Oral Assessment — ${name}</h1>
-  <div class="meta">${c.label} &nbsp;·&nbsp; ${date}</div>
-  ${company||product ? `<div class="info">${company?'Company: <strong>'+company+'</strong>':''}${company&&product?' &nbsp;·&nbsp; ':''}${product?'Product(s): <strong>'+product+'</strong>':''}</div>` : ''}
-  <table><thead><tr><th>Criterion</th><th>Level</th><th>Notes</th></tr></thead><tbody>${rows}</tbody></table>
-  ${ww||ci ? `<div class="st">Overall Impression</div><div class="og">
-    ${ww?`<div class="ob went"><h3>✓ What went well</h3><p>${ww}</p></div>`:'<div></div>'}
-    ${ci?`<div class="ob improve"><h3>△ What could be improved</h3><p>${ci}</p></div>`:'<div></div>'}
-  </div>` : ''}
-  <script>window.onload=function(){window.print()}<\/script></body></html>`;
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Assessment \u2014 ${name}</title>
+<style>
+  body{font-family:Georgia,serif;max-width:760px;margin:40px auto;padding:0 24px;color:#111;border-top:4px solid #111;}
+  h1{font-size:22px;margin-bottom:5px;font-weight:bold;font-family:Georgia,serif;}
+  .meta{color:#666;font-size:13px;margin-bottom:2px;}
+  .atype{font-size:13px;font-weight:bold;color:#111;margin-bottom:14px;margin-top:4px;}
+  .info{font-size:13px;color:#444;margin-bottom:16px;}
+  table{width:100%;border-collapse:collapse;margin-bottom:24px;}
+  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#999;padding:6px 10px;border-bottom:2px solid #111;font-family:Georgia,serif;}
+  td{vertical-align:top;}
+  .st{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#999;margin:20px 0 8px;font-weight:bold;}
+  .og{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .ob{border:1px solid #ddd;border-radius:3px;padding:12px 14px;}
+  .ob h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:bold;}
+  .ob p{font-size:13px;line-height:1.65;color:#333;}
+  .went h3{color:#1e7a4a;} .improve h3{color:#8a5200;}
+  .total-box{margin-top:26px;padding:14px 18px;border:2px solid #111;border-radius:3px;display:flex;align-items:baseline;gap:14px;}
+  .total-label{font-size:11px;text-transform:uppercase;letter-spacing:2px;font-weight:bold;color:#666;}
+  .total-score{font-size:28px;font-weight:bold;color:#111;font-family:Georgia,serif;letter-spacing:-1px;}
+  .total-denom{font-size:16px;font-weight:400;color:#666;}
+  @media print{@page{margin:1.4cm}}
+</style></head><body>
+<h1>Oral Assessment \u2014 ${name}</h1>
+<div class="meta">${c.label} &nbsp;\u00b7&nbsp; ${date}${group ? ' &nbsp;\u00b7&nbsp; Group: <strong>' + group + '</strong>' : ''}</div>
+${atypeStr ? `<div class="atype">${atypeStr}</div>` : ''}
+${company || product ? `<div class="info">${company ? 'Company: <strong>' + company + '</strong>' : ''}${company && product ? ' &nbsp;\u00b7&nbsp; ' : ''}${product ? 'Product(s): <strong>' + product + '</strong>' : ''}</div>` : ''}
+<table><thead><tr><th>Criterion</th><th>Level</th>${c.type === 'graded' ? '<th style="text-align:center">Score</th>' : ''}<th>Notes</th></tr></thead><tbody>${rows}</tbody></table>
+${ww || ci ? `<div class="st">Overall Impression</div><div class="og">
+  ${ww ? `<div class="ob went"><h3>\u2713 What went well</h3><p>${ww}</p></div>` : '<div></div>'}
+  ${ci ? `<div class="ob improve"><h3>\u25b3 What could be improved</h3><p>${ci}</p></div>` : '<div></div>'}
+</div>` : ''}
+<div class="total-box">
+  <span class="total-label">Total Score</span>
+  <span class="total-score">${score !== null ? score : '\u2014'}<span class="total-denom"> / 20</span></span>
+</div>
+<script>window.onload=function(){window.print()}<\/script>
+</body></html>`;
 
   const win = window.open('', '_blank');
   win.document.write(html);
   win.document.close();
 }
 </script>
+
+<!-- Confirm overwrite modal -->
+<div id="overwrite-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;align-items:center;justify-content:center;">
+  <div style="background:#fff;border:2px solid #111;border-radius:6px;padding:1.6rem 1.8rem;max-width:420px;width:90%;font-family:'Source Sans 3',sans-serif;">
+    <div style="font-family:'Libre Baskerville',Georgia,serif;font-size:1rem;font-weight:700;margin-bottom:.5rem;">⚠ Overwrite existing note?</div>
+    <div style="font-size:.88rem;color:#555;margin-bottom:1rem;line-height:1.5;">This criterion already has a note. Changing the level will replace it with the generic comment.<br><br>Copy your note below before confirming if needed:</div>
+    <textarea id="modal-preview" readonly style="width:100%;border:1px solid #ccc;border-radius:4px;padding:.5rem .7rem;font-size:.82rem;font-family:'Source Sans 3',sans-serif;resize:vertical;min-height:70px;background:#fafafa;color:#333;margin-bottom:1rem;line-height:1.5;"></textarea>
+    <div style="display:flex;gap:.7rem;justify-content:flex-end;">
+      <button onclick="closeModal()" style="padding:.45rem 1rem;border:1.5px solid #ccc;border-radius:4px;background:#fff;font-family:'Source Sans 3',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;">Cancel</button>
+      <button onclick="confirmPick()" style="padding:.45rem 1rem;border:1.5px solid #111;border-radius:4px;background:#111;color:#fff;font-family:'Source Sans 3',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;">Yes, overwrite</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
