@@ -4,139 +4,242 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EPHEC — Oral Assessment Tool</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #141414; --paper: #f5f2ed; --card: #fff;
-  --rule: #e0dbd3; --muted: #7a7570;
-  --green: #457466; --green-dark: #2e5249; --green-pale: #eaf2ef; --green-mid: #c2dbd5;
-  --fail-c:#c0392b; --fail-bg:#fdf0ef;
-  --poor-c:#d4860a; --poor-bg:#fef8ec;
-  --fair-c:#2980b9; --fair-bg:#eaf4fb;
-  --excel-c:#27ae60; --excel-bg:#eafaf1;
-  --rad:10px;
+  --ink: #1c1c1c;
+  --paper: #f8f6f1;
+  --card: #ffffff;
+  --rule: #d8d2c8;
+  --muted: #6b6560;
+  --green: #457466;
+  --green-dark: #2e5249;
+  --green-pale: #eaf3f0;
+  --green-mid: #b8d8d0;
+  --fail-c:#a02828; --fail-bg:#fdf2f2;
+  --poor-c:#b06a00; --poor-bg:#fdf6ec;
+  --fair-c:#1a5e8a; --fair-bg:#eef5fb;
+  --excel-c:#1e7a4a; --excel-bg:#eef8f3;
+  --rad:6px;
+  --serif:'Libre Baskerville',Georgia,serif;
+  --sans:'Source Sans 3',system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Instrument Sans',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height:100vh;font-size:15px;}
 
 /* ── WELCOME ── */
-#welcome{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;background:var(--ink);color:white;}
-.wl-logo{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:2.5rem;}
-.wl-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;text-align:center;line-height:1.1;margin-bottom:.5rem;}
-.wl-title span{color:#9be0cc;}
-.wl-sub{color:rgba(255,255,255,.4);font-size:.88rem;margin-bottom:3rem;text-align:center;}
-.cc-wrap{display:flex;gap:1.2rem;flex-wrap:wrap;justify-content:center;max-width:820px;}
-.cc{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:16px;padding:1.8rem 1.6rem;cursor:pointer;transition:all .2s;width:230px;text-align:center;}
-.cc:hover{background:rgba(155,224,204,.1);border-color:rgba(155,224,204,.4);transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.35);}
-.cc-icon{font-size:1.8rem;margin-bottom:.7rem;}
-.cc-title{font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;color:white;margin-bottom:.35rem;}
-.cc-sub{font-size:.75rem;color:rgba(255,255,255,.38);line-height:1.45;}
+#welcome{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:3rem 2rem;
+  background:#1a2820;
+  color:white;
+}
+.wl-logo{
+  font-family:var(--sans);font-size:.78rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(255,255,255,.38);margin-bottom:3rem;
+  border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:1rem;
+  text-align:center;
+}
+.wl-title{
+  font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:700;
+  text-align:center;line-height:1.15;margin-bottom:.6rem;letter-spacing:-.5px;
+}
+.wl-title span{color:#a8d8c8;}
+.wl-sub{color:rgba(255,255,255,.42);font-size:1rem;margin-bottom:3.5rem;text-align:center;font-style:italic;}
+.cc-wrap{display:flex;gap:1.5rem;flex-wrap:wrap;justify-content:center;max-width:900px;}
+.cc{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:8px;padding:2rem 1.8rem;cursor:pointer;
+  transition:all .2s;width:252px;text-align:center;
+}
+.cc:hover{background:rgba(168,216,200,.09);border-color:rgba(168,216,200,.4);transform:translateY(-2px);box-shadow:0 10px 32px rgba(0,0,0,.3);}
+.cc-icon{font-size:2rem;margin-bottom:.9rem;}
+.cc-title{font-family:var(--serif);font-weight:700;font-size:1.05rem;color:white;margin-bottom:.5rem;}
+.cc-sub{font-size:.82rem;color:rgba(255,255,255,.4);line-height:1.55;}
 
 /* ── ASSESSMENT SCREEN ── */
 #assessment{display:none;height:100vh;flex-direction:column;overflow:hidden;}
 
 /* top bar */
-.top-bar{background:var(--ink);color:white;padding:.55rem 1rem;display:flex;align-items:center;gap:.8rem;flex-shrink:0;flex-wrap:wrap;}
-.back-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.65);font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:.28rem .7rem;border-radius:50px;cursor:pointer;transition:all .15s;white-space:nowrap;}
-.back-btn:hover{color:white;background:rgba(255,255,255,.15);}
-.tb-course{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:800;color:#9be0cc;white-space:nowrap;}
-.tb-inputs{display:flex;align-items:center;gap:.7rem;flex:1;flex-wrap:wrap;}
-.ti{display:flex;align-items:center;gap:.35rem;}
-.ti label{font-family:'Syne',sans-serif;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.38);white-space:nowrap;}
-.ti input{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:6px;color:white;font-family:'Syne',sans-serif;font-size:.78rem;font-weight:600;padding:.22rem .55rem;outline:none;transition:border-color .15s;}
-.ti input:focus{border-color:#9be0cc;}
-.ti input::placeholder{color:rgba(255,255,255,.22);font-weight:400;}
-.ti input.key{font-family:monospace;font-size:.72rem;width:160px;}
-.tb-date{font-size:.68rem;color:rgba(255,255,255,.28);white-space:nowrap;margin-left:auto;}
+.top-bar{
+  background:#1a2820;color:white;
+  padding:.7rem 1.2rem;
+  display:flex;align-items:center;gap:1rem;flex-shrink:0;flex-wrap:wrap;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.back-btn{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+  color:rgba(255,255,255,.7);font-family:var(--sans);font-size:.78rem;font-weight:600;
+  padding:.32rem .85rem;border-radius:4px;cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.back-btn:hover{color:white;background:rgba(255,255,255,.14);}
+.tb-course{font-family:var(--serif);font-size:.95rem;font-weight:700;color:#a8d8c8;white-space:nowrap;font-style:italic;}
+.tb-inputs{display:flex;align-items:center;gap:.9rem;flex:1;flex-wrap:wrap;}
+.ti{display:flex;align-items:center;gap:.4rem;}
+.ti label{
+  font-family:var(--sans);font-size:.7rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:1.2px;color:rgba(255,255,255,.4);white-space:nowrap;
+}
+.ti input{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:4px;
+  color:white;font-family:var(--sans);font-size:.88rem;font-weight:500;
+  padding:.28rem .65rem;outline:none;transition:border-color .15s;
+}
+.ti input:focus{border-color:#a8d8c8;}
+.ti input::placeholder{color:rgba(255,255,255,.25);font-weight:400;}
+.ti input.key{font-family:monospace;font-size:.78rem;width:170px;}
+.tb-date{font-size:.75rem;color:rgba(255,255,255,.32);white-space:nowrap;margin-left:auto;font-style:italic;}
 
 /* body split */
 .assess-body{display:flex;flex:1;overflow:hidden;}
 
 /* criteria col */
-.crit-col{flex:1;overflow-y:auto;padding:.6rem;display:flex;flex-direction:column;gap:.45rem;background:var(--paper);}
+.crit-col{
+  flex:1;overflow-y:auto;padding:.9rem 1rem;
+  display:flex;flex-direction:column;gap:.6rem;
+  background:var(--paper);
+}
 
 /* summary col */
-.sum-col{width:290px;flex-shrink:0;background:var(--ink);color:white;display:flex;flex-direction:column;border-left:1px solid rgba(255,255,255,.08);}
-.sum-head{padding:.75rem .9rem .5rem;font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.3);border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0;}
-.sum-body{flex:1;overflow-y:auto;padding:.6rem;}
-.sum-foot{padding:.7rem;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:.4rem;flex-shrink:0;}
+.sum-col{
+  width:310px;flex-shrink:0;background:#1a2820;color:white;
+  display:flex;flex-direction:column;
+  border-left:1px solid rgba(255,255,255,.07);
+}
+.sum-head{
+  padding:.9rem 1rem .65rem;
+  font-family:var(--sans);font-size:.7rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:2.5px;color:rgba(255,255,255,.35);
+  border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0;
+}
+.sum-body{flex:1;overflow-y:auto;padding:.75rem;}
+.sum-foot{
+  padding:.85rem;border-top:1px solid rgba(255,255,255,.08);
+  display:flex;flex-direction:column;gap:.45rem;flex-shrink:0;
+}
 
 /* criterion card */
-.crit-card{background:white;border:1.5px solid var(--rule);border-radius:var(--rad);padding:.55rem .75rem;transition:border-color .15s;}
-.crit-card:focus-within{border-color:var(--green-mid);}
-.crit-row{display:flex;align-items:flex-start;gap:.55rem;margin-bottom:.35rem;flex-wrap:wrap;}
-.crit-meta{flex:1;min-width:90px;}
-.crit-name{font-family:'Syne',sans-serif;font-size:.8rem;font-weight:800;color:var(--ink);}
-.crit-wt{font-size:.65rem;color:var(--green);font-weight:600;margin-left:.25rem;}
-.crit-hint{font-size:.68rem;color:var(--muted);line-height:1.3;margin-top:.08rem;}
-.lvl-wrap{display:flex;gap:.28rem;flex-wrap:wrap;}
-.lvl-btn{border:1.5px solid var(--rule);border-radius:5px;padding:.18rem .5rem;font-family:'Syne',sans-serif;font-size:.65rem;font-weight:700;cursor:pointer;transition:all .12s;background:var(--paper);color:var(--muted);text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;}
-.lvl-btn:hover{transform:translateY(-1px);}
+.crit-card{
+  background:var(--card);
+  border:1px solid var(--rule);
+  border-left:3px solid var(--green-mid);
+  border-radius:var(--rad);
+  padding:.8rem 1rem;
+  transition:border-color .15s, box-shadow .15s;
+}
+.crit-card:focus-within{border-color:var(--green);border-left-color:var(--green);box-shadow:0 2px 12px rgba(69,116,102,.1);}
+.crit-row{display:flex;align-items:flex-start;gap:.8rem;margin-bottom:.5rem;flex-wrap:wrap;}
+.crit-meta{flex:1;min-width:120px;}
+.crit-name{
+  font-family:var(--serif);font-size:.95rem;font-weight:700;color:var(--ink);
+  letter-spacing:-.2px;
+}
+.crit-wt{
+  font-family:var(--sans);font-size:.72rem;color:var(--green);font-weight:600;
+  margin-left:.35rem;background:var(--green-pale);padding:.05rem .35rem;border-radius:3px;
+}
+.crit-hint{font-size:.8rem;color:var(--muted);line-height:1.4;margin-top:.2rem;font-style:italic;}
+.lvl-wrap{display:flex;gap:.4rem;flex-wrap:wrap;align-items:flex-start;}
+.lvl-btn{
+  border:1.5px solid var(--rule);border-radius:4px;padding:.3rem .7rem;
+  font-family:var(--sans);font-size:.8rem;font-weight:600;
+  cursor:pointer;transition:all .13s;background:var(--paper);color:var(--muted);
+  white-space:nowrap;
+}
+.lvl-btn:hover{border-color:var(--ink);color:var(--ink);background:#fff;}
 .lvl-btn.af{background:var(--fail-bg);color:var(--fail-c);border-color:var(--fail-c);}
 .lvl-btn.ap{background:var(--poor-bg);color:var(--poor-c);border-color:var(--poor-c);}
 .lvl-btn.ar{background:var(--fair-bg);color:var(--fair-c);border-color:var(--fair-c);}
 .lvl-btn.ae{background:var(--excel-bg);color:var(--excel-c);border-color:var(--excel-c);}
-.crit-notes{width:100%;border:1px solid var(--rule);border-radius:5px;padding:.3rem .55rem;font-family:'Instrument Sans',sans-serif;font-size:.75rem;color:var(--ink);background:var(--paper);resize:none;height:42px;outline:none;transition:border-color .15s;line-height:1.4;}
+.crit-notes{
+  width:100%;
+  border:1px solid var(--rule);border-radius:4px;
+  padding:.45rem .7rem;
+  font-family:var(--sans);font-size:.9rem;color:var(--ink);
+  background:#fdfcfa;
+  resize:vertical;min-height:52px;max-height:110px;
+  outline:none;transition:border-color .15s;line-height:1.55;
+}
 .crit-notes:focus{border-color:var(--green);background:white;}
-.crit-notes::placeholder{color:#bbb;}
+.crit-notes::placeholder{color:#c0bab4;}
 
 /* overall row */
-.overall-row{display:grid;grid-template-columns:1fr 1fr;gap:.45rem;}
-.ovb{background:white;border:1.5px solid var(--rule);border-radius:var(--rad);padding:.55rem .75rem;}
-.ovb label{display:block;font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:.25rem;}
+.overall-row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;}
+.ovb{
+  background:var(--card);border:1px solid var(--rule);border-radius:var(--rad);
+  padding:.8rem 1rem;
+}
+.ovb label{
+  display:block;font-family:var(--sans);font-size:.75rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.35rem;
+}
 .ovb.went label{color:var(--excel-c);}
 .ovb.improve label{color:var(--poor-c);}
-.ovb textarea{width:100%;border:none;background:transparent;font-family:'Instrument Sans',sans-serif;font-size:.78rem;color:var(--ink);resize:none;height:48px;outline:none;line-height:1.5;}
-.ovb textarea::placeholder{color:#ccc;}
+.ovb textarea{
+  width:100%;border:none;background:transparent;
+  font-family:var(--sans);font-size:.9rem;color:var(--ink);
+  resize:none;height:58px;outline:none;line-height:1.55;
+}
+.ovb textarea::placeholder{color:#c0bab4;}
 
 /* summary chips */
-.sc{border-radius:6px;padding:.35rem .55rem;margin-bottom:.28rem;display:flex;align-items:center;justify-content:space-between;gap:.35rem;}
-.sc .sc-n{font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.5);flex:1;}
-.sc .sc-l{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;}
-.sc .sc-s{font-family:'Syne',sans-serif;font-size:.68rem;color:rgba(255,255,255,.38);}
-.s-fail{background:rgba(192,57,43,.2);}
-.s-poor{background:rgba(212,134,10,.2);}
-.s-fair{background:rgba(41,128,185,.2);}
-.s-excellent{background:rgba(39,174,96,.2);}
+.sc{
+  border-radius:4px;padding:.45rem .65rem;margin-bottom:.35rem;
+  display:flex;align-items:center;justify-content:space-between;gap:.4rem;
+}
+.sc .sc-n{
+  font-family:var(--sans);font-size:.75rem;font-weight:600;
+  color:rgba(255,255,255,.55);flex:1;
+}
+.sc .sc-l{font-family:var(--sans);font-size:.82rem;font-weight:700;}
+.sc .sc-s{font-family:var(--sans);font-size:.72rem;color:rgba(255,255,255,.38);}
+.s-fail{background:rgba(160,40,40,.22);}
+.s-poor{background:rgba(176,106,0,.22);}
+.s-fair{background:rgba(26,94,138,.22);}
+.s-excellent{background:rgba(30,122,74,.22);}
 .s-none{background:rgba(255,255,255,.04);}
-.sum-total{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;color:white;text-align:center;padding:.4rem 0 .15rem;}
-.sum-total span{color:#9be0cc;}
-.sum-tlabel{text-align:center;font-size:.62rem;color:rgba(255,255,255,.28);text-transform:uppercase;letter-spacing:1px;margin-bottom:.45rem;}
+.sum-total{
+  font-family:var(--serif);font-size:2rem;font-weight:700;color:white;
+  text-align:center;padding:.5rem 0 .1rem;letter-spacing:-.5px;
+}
+.sum-total span{color:#a8d8c8;}
+.sum-tlabel{
+  text-align:center;font-size:.7rem;color:rgba(255,255,255,.32);
+  text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.55rem;
+  font-family:var(--sans);
+}
 
 /* buttons */
-.btn{font-family:'Syne',sans-serif;font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.8px;padding:.5rem .9rem;border-radius:50px;border:none;cursor:pointer;transition:all .17s;width:100%;}
-.btn-gen{background:#9be0cc;color:var(--ink);}
-.btn-gen:hover{background:#7dd4b8;}
-.btn-rst{background:rgba(255,255,255,.06);color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.09);}
-.btn-rst:hover{color:white;background:rgba(255,255,255,.11);}
-.btn-prt{background:rgba(255,255,255,.06);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.09);}
-.btn-prt:hover{color:white;background:rgba(255,255,255,.11);}
+.btn{
+  font-family:var(--sans);font-weight:600;font-size:.82rem;
+  padding:.6rem 1rem;border-radius:4px;border:none;cursor:pointer;
+  transition:all .17s;width:100%;letter-spacing:.3px;
+}
 
-/* AI polish */
-.ai-row{display:flex;align-items:center;gap:.35rem;margin-top:.2rem;}
-.btn-pol{background:rgba(155,224,204,.1);border:1px solid rgba(155,224,204,.22);color:#9be0cc;font-family:'Syne',sans-serif;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:.15rem .5rem;border-radius:50px;cursor:pointer;transition:all .13s;}
-.btn-pol:hover:not(:disabled){background:rgba(155,224,204,.2);}
-.btn-pol:disabled{opacity:.3;cursor:default;}
-.ai-sug{display:none;background:rgba(155,224,204,.06);border:1px solid rgba(155,224,204,.15);border-radius:6px;padding:.38rem .55rem;font-size:.75rem;line-height:1.42;color:rgba(255,255,255,.82);margin-top:.22rem;}
-.ai-sug.show{display:block;}
-.ai-sl{font-family:'Syne',sans-serif;font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#9be0cc;margin-bottom:.15rem;}
-.ai-acts{display:flex;gap:.3rem;margin-top:.25rem;}
-.btn-acc,.btn-dis{font-family:'Syne',sans-serif;font-size:.6rem;font-weight:700;text-transform:uppercase;padding:.13rem .5rem;border-radius:50px;cursor:pointer;transition:all .12s;}
-.btn-acc{background:rgba(39,174,96,.18);border:1px solid rgba(39,174,96,.32);color:#6ddfa0;}
-.btn-acc:hover{background:rgba(39,174,96,.32);}
-.btn-dis{background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.32);}
-.btn-dis:hover{color:rgba(255,255,255,.6);}
+.btn-rst{background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1);}
+.btn-rst:hover{color:white;background:rgba(255,255,255,.12);}
+.btn-prt{background:rgba(255,255,255,.06);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.1);}
+.btn-prt:hover{color:white;background:rgba(255,255,255,.12);}
+
+
 
 /* note items in summary */
-.ni{margin-bottom:.45rem;padding-bottom:.45rem;border-bottom:1px solid rgba(255,255,255,.05);}
+.ni{margin-bottom:.55rem;padding-bottom:.55rem;border-bottom:1px solid rgba(255,255,255,.06);}
 .ni:last-child{border-bottom:none;}
-.ni-crit{font-family:'Syne',sans-serif;font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.38);margin-bottom:.12rem;}
-.ni-text{font-size:.76rem;line-height:1.42;color:rgba(255,255,255,.78);}
+.ni-crit{
+  font-family:var(--sans);font-size:.68rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:.15rem;
+}
+.ni-text{font-size:.88rem;line-height:1.52;color:rgba(255,255,255,.82);}
 
-.divider{height:1px;background:rgba(255,255,255,.07);margin:.45rem 0;}
-.section-lbl{font-family:'Syne',sans-serif;font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.28);margin-bottom:.35rem;}
+.divider{height:1px;background:rgba(255,255,255,.07);margin:.55rem 0;}
+.section-lbl{
+  font-family:var(--sans);font-size:.65rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:2px;color:rgba(255,255,255,.3);margin-bottom:.4rem;
+}
 
-@media(max-width:680px){.sum-col{display:none;}.overall-row{grid-template-columns:1fr;}}
+@media(max-width:720px){.sum-col{display:none;}.overall-row{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -155,7 +258,7 @@ body{font-family:'Instrument Sans',sans-serif;background:var(--paper);color:var(
     <div class="cc" onclick="launch('y2')">
       <div class="cc-icon">📗</div>
       <div class="cc-title">2nd Year English</div>
-      <div class="cc-sub">Presentation Assessment<br>Contact · Search · Convince · Conclude · Delivery<br><br>Weighted %</div>
+      <div class="cc-sub">Grammar · Vocabulary · Pronunciation · Content · Form<br><br>B1+ level · Graded /20</div>
     </div>
     <div class="cc" onclick="launch('b2b')">
       <div class="cc-icon">🤝</div>
@@ -174,7 +277,6 @@ body{font-family:'Instrument Sans',sans-serif;background:var(--paper);color:var(
       <div class="ti"><label>Student</label><input type="text" id="inp-student" placeholder="Name…"></div>
       <div class="ti" id="grp-company" style="display:none"><label>Company</label><input type="text" id="inp-company" placeholder="Company represented…" style="width:150px"></div>
       <div class="ti" id="grp-product" style="display:none"><label>Product(s)</label><input type="text" id="inp-product" placeholder="Product(s) presented…" style="width:150px"></div>
-      <div class="ti"><label>🔑 API Key</label><input type="password" id="inp-key" class="key" placeholder="sk-ant-…"></div>
     </div>
     <div class="tb-date" id="tb-date"></div>
   </div>
@@ -186,7 +288,6 @@ body{font-family:'Instrument Sans',sans-serif;background:var(--paper);color:var(
       <div class="sum-foot">
         <div class="sum-total" id="sum-total">—</div>
         <div class="sum-tlabel" id="sum-tlabel">Total</div>
-        <button class="btn btn-gen" onclick="genSummary()">✦ Generate Notes</button>
         <button class="btn btn-prt" onclick="doPrint()">🖨 Print / PDF</button>
         <button class="btn btn-rst" onclick="resetAll()">↺ Reset</button>
       </div>
@@ -244,49 +345,49 @@ const COURSES = {
     ]
   },
   y2: {
-    label: '2nd Year English — Presentation',
-    type: 'weighted',
+    label: '2nd Year English',
+    type: 'y1',
     levels: [
-      {key:'fail',      label:'Fail (0–25%)',       cls:'af', color:'#c0392b', pct:12},
-      {key:'poor',      label:'Poor (30–45%)',       cls:'ap', color:'#d4860a', pct:37},
-      {key:'fair',      label:'Fair (50–70%)',       cls:'ar', color:'#2980b9', pct:60},
-      {key:'excellent', label:'Excellent (75–100%)', cls:'ae', color:'#27ae60', pct:87},
+      {key:'fail',      label:'Fail',      cls:'af', color:'#a02828', mid:2},
+      {key:'poor',      label:'Poor',      cls:'ap', color:'#b06a00', mid:8},
+      {key:'fair',      label:'Fair',      cls:'ar', color:'#1a5e8a', mid:12},
+      {key:'excellent', label:'Excellent', cls:'ae', color:'#1e7a4a', mid:17},
     ],
     criteria: [
-      {id:'contact', name:'Contact', wt:20, hint:'Introduction, icebreaker, identity check.',
+      {id:'grammar', name:'Grammar', hint:'Accuracy and range of structures at B1+ level.',
        comments:{
-         fail:      'Fails to verify identity, introduce self, or state purpose of visit.',
-         poor:      'Incomplete introductions, weak icebreakers, and inconsistent identity verification.',
-         fair:      'Verifies identity, introduces themselves, and uses an icebreaker, but may lack polish and experience some awkwardness.',
-         excellent: 'Verifies identity, delivers a polished introduction, and uses an engaging icebreaker to build rapport.'
+         fail:      'Uses only isolated words or memorised phrases. Errors are pervasive and prevent communication.',
+         poor:      'Relies on simple structures with frequent grammatical errors. Complex forms are attempted but mostly inaccurate.',
+         fair:      'Uses a range of structures with reasonable accuracy. Attempts more complex forms; errors occur but rarely impede meaning.',
+         excellent: 'Demonstrates consistent control of a wide range of structures, including complex forms, with only occasional slips.'
        }},
-      {id:'search', name:'Search', wt:20, hint:'Question types, relevance, reformulation.',
+      {id:'vocabulary', name:'Vocabulary', hint:'Range, precision and register at B1+ level.',
        comments:{
-         fail:      'Questions lack context and relevance, hindering prospect understanding.',
-         poor:      'Asks limited questions with minimal context and low relevance. Reformulates motivations inaccurately or incompletely.',
-         fair:      'Asks varied question types, eliciting some affirmative responses. Questions are mostly relevant with moderate reformulation clarity.',
-         excellent: 'Asks diverse, strategic questions to consistently elicit affirmative responses. Highly relevant and contextualized with accurate reformulations.'
+         fail:      'Very limited vocabulary. Frequent errors in word choice make understanding difficult.',
+         poor:      'Basic vocabulary with noticeable gaps. Relies on general terms and circumlocution; limited range for abstract or professional topics.',
+         fair:      'Adequate vocabulary to discuss most topics. Uses some topic-specific language but may lack precision or variety in abstract contexts.',
+         excellent: 'Good range of vocabulary, including topic-specific and semi-formal register. Precise word choice with effective use of collocations and expressions.'
        }},
-      {id:'convince', name:'Convince', wt:20, hint:'Argumentation, objections, product agreement.',
+      {id:'pronunciation', name:'Pronunciation', hint:'Intelligibility, stress and intonation at B1+ level.',
        comments:{
-         fail:      'Lack of arguments, inappropriate vocabulary, and failure to secure product agreement or handle objections.',
-         poor:      'Weak argumentation, use of risky terms, and difficulty handling objections.',
-         fair:      'Arguments are clear and structured. Product agreement is secured and objections are adequately handled.',
-         excellent: 'Effective and convincing argumentation highlighting benefits. Objections are addressed in the most effective way to secure product agreement.'
+         fail:      'Pronunciation causes frequent communication breakdowns. Intonation and stress are largely ineffective.',
+         poor:      'Pronunciation is sometimes unclear, requiring effort from the listener. Intonation is inconsistent.',
+         fair:      'Generally clear pronunciation. Some errors in sounds or stress but these rarely impede understanding. Intonation is mostly appropriate.',
+         excellent: 'Clear, natural-sounding pronunciation. Effective use of stress and intonation to convey meaning and engage the listener.'
        }},
-      {id:'conclude', name:'Conclude', wt:25, hint:'Order proposal, negotiation, follow-up.',
+      {id:'content', name:'Content', hint:'Relevance, development and accuracy of ideas.',
        comments:{
-         fail:      'Conclusion lacks order, negotiation, follow-up, and closing.',
-         poor:      'Weak proposal, ineffective negotiation, and vague follow-up.',
-         fair:      'Proposes order, achieves win-win negotiation, schedules follow-up.',
-         excellent: 'Confidently proposes an order, achieves a win-win negotiation, and proactively schedules follow-up.'
+         fail:      'Content is largely irrelevant or too minimal to assess. Does not address the task.',
+         poor:      'Content is partially relevant but underdeveloped. Key information is missing or imprecise.',
+         fair:      'Content is relevant and covers the main points of the task. Some development of ideas, though depth or precision may be lacking at times.',
+         excellent: 'Content is fully relevant, well-developed and detailed. Ideas are clearly articulated and the task is addressed with confidence and accuracy.'
        }},
-      {id:'delivery', name:'Delivery', wt:15, hint:'Attitude, eye contact, note-taking, materials.',
+      {id:'form', name:'Form', hint:'Delivery, coherence, structure and engagement.',
        comments:{
-         fail:      'Displays unprofessional attitude, no eye contact or note-taking.',
-         poor:      'Demonstrates poor sales technique: limited eye contact, poor note-taking, ineffective use of sales materials.',
-         fair:      'Generally maintains a professional attitude with consistent eye contact and adequate note-taking.',
-         excellent: 'Confidently presents sales materials, observes prospect reactions, and takes thorough notes.'
+         fail:      'Delivery is very hesitant or unclear. No discernible structure or audience awareness.',
+         poor:      'Delivery is inconsistent, with noticeable hesitation and limited coherence. Audience engagement is minimal.',
+         fair:      'Delivers content in a generally clear and organised manner. Some use of discourse markers and reasonable audience engagement.',
+         excellent: 'Confident, fluent and well-structured delivery. Effective use of linking devices and discourse markers. Strong audience engagement throughout.'
        }},
     ]
   },
@@ -460,123 +561,6 @@ function refreshSummary() {
   document.getElementById('sum-total').innerHTML = score !== null
     ? `<span>${score}</span><small style="font-size:.75rem;opacity:.5">/20</small>` : '\u2014';
   document.getElementById('sum-tlabel').textContent = 'Score /20 (indicative)';
-}
-
-function genSummary() {
-  const c = COURSES[cur];
-  refreshSummary();
-  const body = document.getElementById('sum-body');
-
-  const notes = c.criteria.map(cr => {
-    const v = document.getElementById(`nt-${cr.id}`)?.value.trim();
-    return v ? {id:cr.id, name:cr.name, level:ratings[cr.id], text:v} : null;
-  }).filter(Boolean);
-
-  const ww = document.getElementById('nt-went')?.value.trim();
-  const ci = document.getElementById('nt-improve')?.value.trim();
-
-  if (!notes.length && !ww && !ci) return;
-
-  if (notes.length) {
-    const d = document.createElement('div'); d.className = 'divider'; body.appendChild(d);
-    const sl = document.createElement('div'); sl.className = 'section-lbl'; sl.textContent = 'Notes'; body.appendChild(sl);
-    notes.forEach(n => {
-      const lv = n.level ? c.levels.find(l => l.key === n.level) : null;
-      const div = document.createElement('div'); div.className = 'ni';
-      div.innerHTML = `<div class="ni-crit">${n.name}</div>
-        <div class="ni-text" id="snt-${n.id}">${n.text}</div>
-        <div class="ai-row">
-          <button class="btn-pol" id="bpol-${n.id}" onclick="polNote('${n.id}','${n.name}','${n.level||''}')">✨ Polish</button>
-        </div>
-        <div class="ai-sug" id="asug-${n.id}">
-          <div class="ai-sl">✦ AI suggestion</div>
-          <div id="asug-t-${n.id}"></div>
-          <div class="ai-acts">
-            <button class="btn-acc" onclick="accNote('${n.id}')">✓ Use</button>
-            <button class="btn-dis" onclick="disNote('${n.id}')">Discard</button>
-          </div>
-        </div>`;
-      body.appendChild(div);
-    });
-  }
-
-  if (ww || ci) {
-    const d2 = document.createElement('div'); d2.className = 'divider'; body.appendChild(d2);
-    const sl2 = document.createElement('div'); sl2.className = 'section-lbl'; sl2.textContent = 'Overall'; body.appendChild(sl2);
-    if (ww) {
-      const dw = document.createElement('div'); dw.className = 'ni';
-      dw.innerHTML = `<div class="ni-crit" style="color:#6ddfa0">✓ Went well</div>
-        <div class="ni-text" id="snt-went">${ww}</div>
-        <div class="ai-row"><button class="btn-pol" id="bpol-went" onclick="polOv('went','What went well')">✨ Polish</button></div>
-        <div class="ai-sug" id="asug-went"><div class="ai-sl">✦ AI suggestion</div><div id="asug-t-went"></div>
-          <div class="ai-acts"><button class="btn-acc" onclick="accOv('went')">✓ Use</button><button class="btn-dis" onclick="disNote('went')">Discard</button></div></div>`;
-      body.appendChild(dw);
-    }
-    if (ci) {
-      const dc = document.createElement('div'); dc.className = 'ni';
-      dc.innerHTML = `<div class="ni-crit" style="color:#f5c97a">△ Improve</div>
-        <div class="ni-text" id="snt-improve">${ci}</div>
-        <div class="ai-row"><button class="btn-pol" id="bpol-improve" onclick="polOv('improve','What could be improved')">✨ Polish</button></div>
-        <div class="ai-sug" id="asug-improve"><div class="ai-sl">✦ AI suggestion</div><div id="asug-t-improve"></div>
-          <div class="ai-acts"><button class="btn-acc" onclick="accOv('improve')">✓ Use</button><button class="btn-dis" onclick="disNote('improve')">Discard</button></div></div>`;
-      body.appendChild(dc);
-    }
-  }
-}
-
-// ── AI ──
-async function callAI(prompt) {
-  const key = document.getElementById('inp-key').value.trim();
-  if (!key) throw new Error('Enter your API key in the top bar first.');
-  const r = await fetch('https://api.anthropic.com/v1/messages', {
-    method:'POST',
-    headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true','x-api-key':key},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})
-  });
-  if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e?.error?.message||`API error ${r.status}`); }
-  const d = await r.json();
-  return d.content[0].text.trim();
-}
-
-async function polNote(id, name, level) {
-  const raw = document.getElementById(`snt-${id}`)?.textContent.trim();
-  if (!raw) return;
-  const btn = document.getElementById(`bpol-${id}`);
-  const sug = document.getElementById(`asug-${id}`);
-  const st  = document.getElementById(`asug-t-${id}`);
-  btn.disabled = true; btn.textContent = '✦…';
-  try {
-    const res = await callAI(`Professional teacher feedback for ${COURSES[cur].label} oral assessment.\nCriterion: ${name}${level ? ' | Level: '+level : ''}\nRaw note: "${raw}"\nRephrase into 1–2 polished sentences for an official student report. Formal but encouraging. No new info. Text only.`);
-    st.textContent = res; sug.classList.add('show');
-  } catch(e) { st.textContent = '⚠ '+e.message; sug.classList.add('show'); }
-  btn.disabled = false; btn.textContent = '✨ Polish';
-}
-function accNote(id) {
-  const t = document.getElementById(`asug-t-${id}`).textContent;
-  document.getElementById(`snt-${id}`).textContent = t;
-  const ta = document.getElementById(`nt-${id}`); if (ta) ta.value = t;
-  document.getElementById(`asug-${id}`).classList.remove('show');
-}
-function disNote(id) { document.getElementById(`asug-${id}`)?.classList.remove('show'); }
-
-async function polOv(key, label) {
-  const raw = document.getElementById(`snt-${key}`)?.textContent.trim();
-  if (!raw) return;
-  const btn = document.getElementById(`bpol-${key}`);
-  const sug = document.getElementById(`asug-${key}`);
-  const st  = document.getElementById(`asug-t-${key}`);
-  btn.disabled = true; btn.textContent = '✦…';
-  try {
-    const res = await callAI(`Professional teacher feedback for ${COURSES[cur].label}.\nSection: "${label}"\nRaw note: "${raw}"\nRephrase into 1–2 polished sentences. Formal but constructive. No new info. Text only.`);
-    st.textContent = res; sug.classList.add('show');
-  } catch(e) { st.textContent = '⚠ '+e.message; sug.classList.add('show'); }
-  btn.disabled = false; btn.textContent = '✨ Polish';
-}
-function accOv(key) {
-  const t = document.getElementById(`asug-t-${key}`).textContent;
-  document.getElementById(`snt-${key}`).textContent = t;
-  const ta = document.getElementById(key === 'went' ? 'nt-went' : 'nt-improve'); if (ta) ta.value = t;
-  document.getElementById(`asug-${key}`).classList.remove('show');
 }
 
 function resetAll() {
