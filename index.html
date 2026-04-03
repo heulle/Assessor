@@ -456,8 +456,11 @@
 
 <div class="wrapper">
 
-  <!-- Student name + date -->
+  <!-- API Key + Student name + date -->
   <div class="student-bar">
+    <label>🔑 API Key</label>
+    <input type="password" id="api-key" placeholder="sk-ant-…" style="min-width:200px;font-size:0.85rem;font-family:monospace;" autocomplete="off">
+    <div style="width:1px;height:24px;background:var(--rule);flex-shrink:0"></div>
     <label>Student</label>
     <input type="text" id="student-name" placeholder="Enter student name…" autocomplete="off">
     <div class="date-field" id="today-date"></div>
@@ -673,12 +676,16 @@ function generateFeedback() {
 }
 
 async function callClaude(prompt) {
+  const apiKey = document.getElementById('api-key').value.trim();
+  if (!apiKey) throw new Error('Please enter your Anthropic API key in the field at the top.');
+
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "anthropic-version": "2023-06-01",
-      "anthropic-dangerous-direct-browser-access": "true"
+      "anthropic-dangerous-direct-browser-access": "true",
+      "x-api-key": apiKey
     },
     body: JSON.stringify({
       model: "claude-sonnet-4-20250514",
