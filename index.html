@@ -274,7 +274,8 @@ body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height
     <div class="cc" onclick="launch('y2')">
       <div class="cc-title">2nd Year English</div>
     </div>
-    <div class="cc" onclick="launch('b2b')">
+    <div class="cc" onclick="promptB2B()" style="position:relative;">
+      <div style="position:absolute;top:.6rem;right:.8rem;font-size:.9rem;opacity:.5;">🔒</div>
       <div class="cc-title">Sales Techniques</div>
     </div>
   </div>
@@ -570,14 +571,13 @@ function buildCriteria(c) {
         <div class="lvl-wrap">${btns}</div>
       </div>
       ${manualInput}
-      <textarea class="crit-notes" id="nt-${cr.id}" placeholder="Notes on ${cr.name.toLowerCase()}\u2026" oninput="refreshSummary();if(COURSES[cur].type==='graded')autoFillOverall(COURSES[cur]);"></textarea>`;
+      <textarea class="crit-notes" id="nt-${cr.id}" placeholder="Notes on ${cr.name.toLowerCase()}\u2026" oninput="refreshSummary()"></textarea>`;
     col.appendChild(card);
   });
   const ov = document.createElement('div');
   ov.className = 'overall-row';
   ov.innerHTML = `
-    <div class="ovb went"><label>\u2713 What went well</label><textarea id="nt-went" placeholder="Strengths\u2026"></textarea></div>
-    <div class="ovb improve"><label>\u25b3 What could be improved</label><textarea id="nt-improve" placeholder="Areas to work on\u2026"></textarea></div>`;
+    <div class="ovb" style="grid-column:1/-1"><label>💬 Comments</label><textarea id="nt-comments" placeholder="Additional comments…" style="height:70px;"></textarea></div>`;
   col.appendChild(ov);
 }
 
@@ -635,44 +635,7 @@ function applyPick(critId, levelKey, btn) {
     const inp = document.getElementById(`sc-${critId}`);
     if (inp) { inp.value = mid; manualScores[critId] = mid; }
   }
-  if (c.type === 'graded') autoFillOverall(c);
   refreshSummary();
-}
-
-const GOOD_OR_ABOVE = ['good','verygood','excellent'];
-const FAIR_OR_BELOW = ['fail','poor','below','fair'];
-
-// Convert a third-person comment to second person ("you" form)
-function toYouForm(text) {
-  return text
-    .replace(/\bhe\/she\b/gi, 'you')
-    .replace(/\bhe or she\b/gi, 'you')
-    .replace(/\bthe student\b/gi, 'you')
-    .replace(/\bthe candidate\b/gi, 'you')
-    .replace(/\bthe speaker\b/gi, 'you')
-    .replace(/\b(Uses|Demonstrates|Delivers|Maintains|Relies|Relies|Requires|Asks|Communicates|Discusses|Proposes|Verifies|Displays|Shows|Has|Produces|Performs|Employs|Achieves|Applies|Develops|Presents|Addresses|Articulates|Controls|Attempts)\b/g,
-      (m) => 'You ' + m.charAt(0).toLowerCase() + m.slice(1))
-    .replace(/\b(Limited|Frequent|Poor|Ineffective|Absent)\b/g,
-      (m) => 'Your ' + m.charAt(0).toLowerCase() + m.slice(1))
-    .replace(/^You you /i, 'You ')  // fix double "you you"
-    .trim();
-}
-
-function autoFillOverall(c) {
-  const wentLines = [];
-  const improveLines = [];
-  c.criteria.forEach(cr => {
-    const r = ratings[cr.id];
-    if (!r) return;
-    const rawNote = document.getElementById(`nt-${cr.id}`)?.value.trim() || '';
-    const note = rawNote ? toYouForm(rawNote) : cr.name;
-    if (GOOD_OR_ABOVE.includes(r)) wentLines.push(`${cr.name}: ${note}`);
-    else if (FAIR_OR_BELOW.includes(r)) improveLines.push(`${cr.name}: ${note}`);
-  });
-  const wwEl = document.getElementById('nt-went');
-  const ciEl = document.getElementById('nt-improve');
-  if (wwEl) wwEl.value = wentLines.join('\n\n');
-  if (ciEl) ciEl.value = improveLines.join('\n\n');
 }
 
 function setManual(critId, val) {
@@ -688,7 +651,6 @@ function setManual(critId, val) {
     const matchBtn = document.querySelector(`[data-crit="${critId}"][data-lk="${matchedLv.key}"]`);
     if (matchBtn) matchBtn.className = `lvl-btn ${matchedLv.cls}`;
   }
-  autoFillOverall(c);
   refreshSummary();
 }
 
@@ -753,7 +715,7 @@ function resetAll() {
   });
   document.getElementById('inp-student').value = '';
   document.getElementById('inp-group').value = '';
-  ['nt-went','nt-improve'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+  ['nt-comments'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
   refreshSummary();
 }
 
@@ -764,8 +726,7 @@ function doPrint() {
   const date    = document.getElementById('tb-date').textContent;
   const company = document.getElementById('inp-company')?.value.trim() || '';
   const product = document.getElementById('inp-product')?.value.trim() || '';
-  const ww      = document.getElementById('nt-went')?.value.trim() || '';
-  const ci      = document.getElementById('nt-improve')?.value.trim() || '';
+  const comments = document.getElementById('nt-comments')?.value.trim() || '';
   const score   = scoreToTwenty(c);
 
   const atypeEl = document.getElementById('atype-ca-text');
@@ -805,11 +766,8 @@ function doPrint() {
   th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#999;padding:6px 10px;border-bottom:2px solid #111;font-family:Georgia,serif;}
   td{vertical-align:top;}
   .st{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#999;margin:20px 0 8px;font-weight:bold;}
-  .og{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  .ob{border:1px solid #ddd;border-radius:3px;padding:12px 14px;}
-  .ob h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:bold;}
-  .ob p{font-size:13px;line-height:1.65;color:#333;}
-  .went h3{color:#1e7a4a;} .improve h3{color:#8a5200;}
+  .cb{border:1px solid #ddd;border-radius:3px;padding:12px 14px;margin-top:6px;}
+  .cb p{font-size:13px;line-height:1.65;color:#333;white-space:pre-wrap;}
   .total-box{margin-top:26px;padding:14px 18px;border:2px solid #111;border-radius:3px;display:flex;align-items:baseline;gap:14px;}
   .total-label{font-size:11px;text-transform:uppercase;letter-spacing:2px;font-weight:bold;color:#666;}
   .total-score{font-size:28px;font-weight:bold;color:#111;font-family:Georgia,serif;letter-spacing:-1px;}
@@ -821,10 +779,7 @@ function doPrint() {
 ${atypeStr ? `<div class="atype">${atypeStr}</div>` : ''}
 ${company || product ? `<div class="info">${company ? 'Company: <strong>' + company + '</strong>' : ''}${company && product ? ' &nbsp;\u00b7&nbsp; ' : ''}${product ? 'Product(s): <strong>' + product + '</strong>' : ''}</div>` : ''}
 <table><thead><tr><th>Criterion</th><th>Level</th>${c.type === 'graded' ? '<th style="text-align:center">Score</th>' : ''}<th>Notes</th></tr></thead><tbody>${rows}</tbody></table>
-${ww || ci ? `<div class="st">Overall Impression</div><div class="og">
-  ${ww ? `<div class="ob went"><h3>\u2713 What went well</h3><p>${ww}</p></div>` : '<div></div>'}
-  ${ci ? `<div class="ob improve"><h3>\u25b3 What could be improved</h3><p>${ci}</p></div>` : '<div></div>'}
-</div>` : ''}
+${comments ? `<div class="st">Comments</div><div class="cb"><p>${comments}</p></div>` : ''}
 <div class="total-box">
   <span class="total-label">Total Score</span>
   <span class="total-score">${score !== null ? score : '\u2014'}<span class="total-denom"> / 20</span></span>
@@ -835,6 +790,30 @@ ${ww || ci ? `<div class="st">Overall Impression</div><div class="og">
   const win = window.open('', '_blank');
   win.document.write(html);
   win.document.close();
+}
+
+function promptB2B() {
+  document.getElementById('pw-input').value = '';
+  document.getElementById('pw-error').style.display = 'none';
+  document.getElementById('pw-modal').style.display = 'flex';
+  setTimeout(() => document.getElementById('pw-input').focus(), 50);
+}
+
+function checkPw() {
+  const val = document.getElementById('pw-input').value;
+  if (val === 'cactus') {
+    closePw();
+    launch('b2b');
+  } else {
+    document.getElementById('pw-error').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+
+function closePw() {
+  document.getElementById('pw-modal').style.display = 'none';
+  document.getElementById('pw-input').value = '';
 }
 </script>
 
@@ -847,6 +826,22 @@ ${ww || ci ? `<div class="st">Overall Impression</div><div class="og">
     <div style="display:flex;gap:.7rem;justify-content:flex-end;">
       <button onclick="closeModal()" style="padding:.45rem 1rem;border:1.5px solid #ccc;border-radius:4px;background:#fff;font-family:'Source Sans 3',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;">Cancel</button>
       <button onclick="confirmPick()" style="padding:.45rem 1rem;border:1.5px solid #111;border-radius:4px;background:#111;color:#fff;font-family:'Source Sans 3',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;">Yes, overwrite</button>
+    </div>
+  </div>
+</div>
+<!-- Password modal for Sales Techniques -->
+<div id="pw-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;align-items:center;justify-content:center;">
+  <div style="background:#fff;border:2px solid #111;border-radius:6px;padding:1.8rem 2rem;max-width:340px;width:90%;font-family:'Source Sans 3',sans-serif;">
+    <div style="font-family:'Libre Baskerville',Georgia,serif;font-size:1.05rem;font-weight:700;margin-bottom:.4rem;">Sales Techniques</div>
+    <div style="font-size:.85rem;color:#666;margin-bottom:1.1rem;">Enter the password to access this section.</div>
+    <input id="pw-input" type="password" placeholder="Password…"
+      style="width:100%;border:1.5px solid #ccc;border-radius:4px;padding:.45rem .7rem;font-family:'Source Sans 3',sans-serif;font-size:.95rem;outline:none;margin-bottom:.5rem;"
+      onkeydown="if(event.key==='Enter')checkPw()"
+      onfocus="document.getElementById('pw-error').style.display='none'">
+    <div id="pw-error" style="display:none;color:#a02828;font-size:.8rem;margin-bottom:.5rem;">Incorrect password. Please try again.</div>
+    <div style="display:flex;gap:.7rem;justify-content:flex-end;margin-top:.6rem;">
+      <button onclick="closePw()" style="padding:.45rem 1rem;border:1.5px solid #ccc;border-radius:4px;background:#fff;font-family:'Source Sans 3',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;">Cancel</button>
+      <button onclick="checkPw()" style="padding:.45rem 1rem;border:1.5px solid #111;border-radius:4px;background:#111;color:#fff;font-family:'Source Sans 3',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;">Enter</button>
     </div>
   </div>
 </div>
